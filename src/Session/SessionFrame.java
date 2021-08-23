@@ -1,14 +1,21 @@
 package Session;
 
+import java.util.Iterator;
+import javax.swing.DefaultListModel;
+
 public class SessionFrame extends javax.swing.JFrame {
 
     public static boolean adding = false;
-    
-    /**
-     * Creates new form SessionFrame
-     */
+
+    public static DefaultListModel mod = new DefaultListModel();
+
     public SessionFrame() {
         initComponents();
+        songQueueList.setModel(mod);
+
+        int songQueueNum = Session.songQueue.countEntry();
+        refreshList();
+
     }
 
     @SuppressWarnings("unchecked")
@@ -33,11 +40,6 @@ public class SessionFrame extends javax.swing.JFrame {
         jInternalFrame1.setTitle("Singing Session");
         jInternalFrame1.setVisible(true);
 
-        songQueueList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "dd", " " };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         songQueuePane.setViewportView(songQueueList);
 
         curSingerLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -68,8 +70,6 @@ public class SessionFrame extends javax.swing.JFrame {
 
         songProgressLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         songProgressLabel.setText("Song Progress");
-
-        songProgreeBar.setValue(0);
 
         javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
         jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
@@ -121,7 +121,7 @@ public class SessionFrame extends javax.swing.JFrame {
                     .addComponent(skipNextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(skipSongButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -137,7 +137,7 @@ public class SessionFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
     private void skipSongButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipSongButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_skipSongButtonActionPerformed
@@ -149,10 +149,20 @@ public class SessionFrame extends javax.swing.JFrame {
                     new ChooseSongFrame().setVisible(true);
                 }
             });
-            adding  = true;
+            adding = true;
         }
 
     }//GEN-LAST:event_addButtonActionPerformed
+
+    public static void refreshList() {
+        mod.clear();
+        int queueNum = Session.songQueue.countEntry();
+        Iterator<Session.ChooseSong> iterator = Session.songQueue.getIterator();
+
+        while (iterator.hasNext()) {
+            mod.addElement(iterator.next());
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
