@@ -47,13 +47,18 @@ public class LinkQueue<T> implements QueueInterface<T> {
             Node positionNode = firstNode;
             Node oldNextNode;
 
-            for (int i = 0; i < position - 2; i++) { //2 is start from 0 and minus 1 before the position we need
-                positionNode = positionNode.nextNode;
+            if (position <= 1) {
+                newNode.nextNode = firstNode;
+                firstNode = newNode;
+            } else {
+                for (int i = 0; i < position - 2; i++) { //2 is start from 0 and minus 1 before the position we need
+                    positionNode = positionNode.nextNode;
+                }
+
+                oldNextNode = positionNode.nextNode;
+                positionNode.nextNode = newNode;
+                newNode.nextNode = oldNextNode;
             }
-            
-            oldNextNode = positionNode.nextNode;
-            positionNode.nextNode = newNode;
-            newNode.nextNode = oldNextNode;
 
             return true;
         }
@@ -115,6 +120,36 @@ public class LinkQueue<T> implements QueueInterface<T> {
         }
 
         return count;
+    }
+
+    @Override
+    public Iterator<T> getIterator() {
+        return new QueueIterator();
+    }
+
+    public class QueueIterator implements Iterator<T> {
+
+        Node nodeReturn;
+
+        QueueIterator() {
+            nodeReturn = firstNode;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return nodeReturn != null;
+        }
+
+        @Override
+        public T next() {
+            if (hasNext()) {
+                Node nodeFirst = nodeReturn;
+                nodeReturn = nodeReturn.nextNode;
+                return (T)nodeFirst.data;
+            }
+            return null;
+        }
+
     }
 
     public class Node {

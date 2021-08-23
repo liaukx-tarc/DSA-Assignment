@@ -12,4 +12,5 @@ public interface QueueInterface<T> {
     public boolean checkEmpty();
     public void clearAll();
     public int countEntry();
+    public Iterator<T> getIterator();
 }

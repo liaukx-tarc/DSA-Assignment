@@ -99,7 +99,7 @@
                       <Component id="skipSongButton" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                       <Component id="addButton" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="51" max="32767" attributes="0"/>
+                  <EmptySpace pref="63" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -115,31 +115,7 @@
             <Component class="javax.swing.JList" name="songQueueList">
               <Properties>
                 <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-                  <StringArray count="23">
-                    <StringItem index="0" value="Item 1"/>
-                    <StringItem index="1" value="Item 2"/>
-                    <StringItem index="2" value="Item 3"/>
-                    <StringItem index="3" value="Item 4"/>
-                    <StringItem index="4" value="Item 5"/>
-                    <StringItem index="5" value="d"/>
-                    <StringItem index="6" value="d"/>
-                    <StringItem index="7" value="d"/>
-                    <StringItem index="8" value="d"/>
-                    <StringItem index="9" value="d"/>
-                    <StringItem index="10" value="d"/>
-                    <StringItem index="11" value="d"/>
-                    <StringItem index="12" value="d"/>
-                    <StringItem index="13" value="d"/>
-                    <StringItem index="14" value="d"/>
-                    <StringItem index="15" value="d"/>
-                    <StringItem index="16" value="d"/>
-                    <StringItem index="17" value="d"/>
-                    <StringItem index="18" value="d"/>
-                    <StringItem index="19" value="d"/>
-                    <StringItem index="20" value="d"/>
-                    <StringItem index="21" value="dd"/>
-                    <StringItem index="22" value=" "/>
-                  </StringArray>
+                  <StringArray count="0"/>
                 </Property>
               </Properties>
               <AuxValues>
@@ -204,9 +180,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JProgressBar" name="songProgreeBar">
-          <Properties>
-            <Property name="value" type="int" value="0"/>
-          </Properties>
         </Component>
       </SubComponents>
     </Container>
