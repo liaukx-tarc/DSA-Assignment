@@ -135,6 +135,7 @@ public class ChooseSongFrame extends javax.swing.JFrame {
         if(Session.currentSong == null){
             Session.sessionFrame.nextSong();
         }
+        Session.sessionFrame.refreshList();
         
         super.dispose();
         SessionFrame.adding = false;
