@@ -49,11 +49,11 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="curSingerLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="songField" min="-2" pref="118" max="-2" attributes="0"/>
+                          <Component id="singerField" min="-2" pref="118" max="-2" attributes="0"/>
                           <EmptySpace pref="88" max="32767" attributes="0"/>
                           <Component id="curSongLabel" min="-2" pref="92" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="singerField" min="-2" pref="118" max="-2" attributes="0"/>
+                          <Component id="songField" min="-2" pref="118" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -81,10 +81,10 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="songField" min="-2" max="-2" attributes="0"/>
+                      <Component id="singerField" min="-2" max="-2" attributes="0"/>
                       <Component id="curSingerLabel" min="-2" pref="21" max="-2" attributes="0"/>
                       <Component id="curSongLabel" alignment="1" min="-2" pref="21" max="-2" attributes="0"/>
-                      <Component id="singerField" min="-2" max="-2" attributes="0"/>
+                      <Component id="songField" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                   <Component id="songQueuePane" min="-2" pref="288" max="-2" attributes="0"/>
@@ -99,7 +99,7 @@
                       <Component id="skipSongButton" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                       <Component id="addButton" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="75" max="32767" attributes="0"/>
+                  <EmptySpace pref="79" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -133,7 +133,7 @@
             <Property name="text" type="java.lang.String" value="Current Singer : "/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextPane" name="singerField">
+        <Component class="javax.swing.JTextPane" name="songField">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
           </Properties>
@@ -146,7 +146,7 @@
             <Property name="text" type="java.lang.String" value="Current Song :"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextPane" name="songField">
+        <Component class="javax.swing.JTextPane" name="singerField">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
           </Properties>

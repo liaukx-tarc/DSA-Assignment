@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class SongList {
-    Song song1 = new Song("Along",12);
-    Song song2 = new Song("Fire",15);
-    Song song3 = new Song("Hello",18);
-    Song song4 = new Song("World",9);
+    Song song1 = new Song("Along",120);
+    Song song2 = new Song("Fire",150);
+    Song song3 = new Song("Hello",180);
+    Song song4 = new Song("World",90);
     
     public static List<Song> songList = new ArrayList<>();
     
