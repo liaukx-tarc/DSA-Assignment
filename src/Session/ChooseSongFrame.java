@@ -127,7 +127,6 @@ public class ChooseSongFrame extends javax.swing.JFrame {
             }
             Session.songQueue.InsertEntry(chooseSong, placeChoose);
             
-            
         } else {
             Session.songQueue.addQueue(chooseSong);
         }

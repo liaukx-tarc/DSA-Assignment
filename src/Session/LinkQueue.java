@@ -42,7 +42,7 @@ public class LinkQueue<T> implements QueueInterface<T> {
 
     @Override
     public boolean InsertEntry(T newEntry, int position) {
-        if (position < countEntry()) {
+        if (position <= countEntry()) {
             Node newNode = new Node(newEntry);
             Node positionNode = getPositionNode(position);
             Node oldNextNode;
@@ -50,8 +50,8 @@ public class LinkQueue<T> implements QueueInterface<T> {
             if (position <= 1) {
                 newNode.nextNode = firstNode;
                 firstNode = newNode;
-            } else {
 
+            } else {
                 oldNextNode = positionNode.nextNode;
                 positionNode.nextNode = newNode;
                 newNode.nextNode = oldNextNode;

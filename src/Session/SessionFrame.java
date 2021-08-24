@@ -23,9 +23,9 @@ public class SessionFrame extends javax.swing.JFrame {
         songQueuePane = new javax.swing.JScrollPane();
         songQueueList = new javax.swing.JList<>();
         curSingerLabel = new javax.swing.JLabel();
-        singerField = new javax.swing.JTextPane();
-        curSongLabel = new javax.swing.JLabel();
         songField = new javax.swing.JTextPane();
+        curSongLabel = new javax.swing.JLabel();
+        singerField = new javax.swing.JTextPane();
         addButton = new javax.swing.JButton();
         skipSongButton = new javax.swing.JButton();
         skipNextButton = new javax.swing.JButton();
@@ -43,12 +43,12 @@ public class SessionFrame extends javax.swing.JFrame {
         curSingerLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         curSingerLabel.setText("Current Singer : ");
 
-        singerField.setEditable(false);
+        songField.setEditable(false);
 
         curSongLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         curSongLabel.setText("Current Song :");
 
-        songField.setEditable(false);
+        singerField.setEditable(false);
 
         addButton.setText("Add Song");
         addButton.addActionListener(new java.awt.event.ActionListener() {
@@ -85,11 +85,11 @@ public class SessionFrame extends javax.swing.JFrame {
                     .addGroup(jInternalFrame1Layout.createSequentialGroup()
                         .addComponent(curSingerLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(songField, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(singerField, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
                         .addComponent(curSongLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(singerField, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(songField, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(2, 2, 2))
                     .addGroup(jInternalFrame1Layout.createSequentialGroup()
                         .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -109,10 +109,10 @@ public class SessionFrame extends javax.swing.JFrame {
             .addGroup(jInternalFrame1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(songField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(singerField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(curSingerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(curSongLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(singerField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(songField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addComponent(songQueuePane, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -124,7 +124,7 @@ public class SessionFrame extends javax.swing.JFrame {
                     .addComponent(skipNextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(skipSongButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -200,8 +200,8 @@ public class SessionFrame extends javax.swing.JFrame {
     }
     
     public void clearCurrentSong(){
-        singerField.setText(null);
         songField.setText(null);
+        singerField.setText(null);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
