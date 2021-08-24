@@ -63,7 +63,7 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="songProgreeBar" max="32767" attributes="0"/>
+                              <Component id="songProgressBar" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Component id="skipSongButton" min="-2" pref="100" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
@@ -90,7 +90,7 @@
                   <Component id="songQueuePane" min="-2" pref="288" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="songProgreeBar" min="-2" pref="19" max="-2" attributes="0"/>
+                      <Component id="songProgressBar" min="-2" pref="19" max="-2" attributes="0"/>
                       <Component id="songProgressLabel" min="-2" pref="19" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -99,7 +99,7 @@
                       <Component id="skipSongButton" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                       <Component id="addButton" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="63" max="32767" attributes="0"/>
+                  <EmptySpace pref="75" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -117,6 +117,7 @@
                 <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
                   <StringArray count="0"/>
                 </Property>
+                <Property name="selectionMode" type="int" value="0"/>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -170,6 +171,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Skip Next"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="skipNextButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="songProgressLabel">
           <Properties>
@@ -179,7 +183,7 @@
             <Property name="text" type="java.lang.String" value="Song Progress"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JProgressBar" name="songProgreeBar">
+        <Component class="javax.swing.JProgressBar" name="songProgressBar">
         </Component>
       </SubComponents>
     </Container>
