@@ -33,6 +33,7 @@ public class ChooseSongFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        songListUI.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         songListPane.setViewportView(songListUI);
 
         cancelButton.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
@@ -126,14 +127,15 @@ public class ChooseSongFrame extends javax.swing.JFrame {
             }
             Session.songQueue.InsertEntry(chooseSong, placeChoose);
             
-            SessionFrame.refreshList();
-            
             
         } else {
             Session.songQueue.addQueue(chooseSong);
-            SessionFrame.refreshList();
         }
 
+        if(Session.currentSong == null){
+            Session.sessionFrame.nextSong();
+        }
+        
         super.dispose();
         SessionFrame.adding = false;
     }//GEN-LAST:event_addButtonActionPerformed

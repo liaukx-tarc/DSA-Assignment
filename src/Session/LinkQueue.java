@@ -44,16 +44,13 @@ public class LinkQueue<T> implements QueueInterface<T> {
     public boolean InsertEntry(T newEntry, int position) {
         if (position < countEntry()) {
             Node newNode = new Node(newEntry);
-            Node positionNode = firstNode;
+            Node positionNode = getPositionNode(position);
             Node oldNextNode;
 
             if (position <= 1) {
                 newNode.nextNode = firstNode;
                 firstNode = newNode;
             } else {
-                for (int i = 0; i < position - 2; i++) { //2 is start from 0 and minus 1 before the position we need
-                    positionNode = positionNode.nextNode;
-                }
 
                 oldNextNode = positionNode.nextNode;
                 positionNode.nextNode = newNode;
@@ -68,17 +65,29 @@ public class LinkQueue<T> implements QueueInterface<T> {
 
     @Override
     public boolean RemoveEntry(int position) {
-        if (position < countEntry()) {
-            Node positionNode = firstNode;
+        int queueNum = countEntry();
+        if (position > 0) {
+            Node positionNode = getPositionNode(position);
 
             if (position <= 1) {
-                firstNode = firstNode.nextNode;
-            } else {
-                for (int i = 0; i < position - 2; i++) { //2 is start from 0 and minus 1 before the position we need
-                    positionNode = positionNode.nextNode;
+                if (queueNum == 1) {
+                    System.out.print("ALL");
+                    clearAll();
+                } else {
+                    System.out.print("2");
+                    firstNode = firstNode.nextNode;
                 }
 
-                positionNode.nextNode = positionNode.nextNode.nextNode;
+            } else {
+                if (positionNode.equals(lastNode)) {
+                    Node previousNode = getPositionNode(position - 1);
+
+                    previousNode.nextNode = null;
+                    lastNode = previousNode;
+
+                } else {
+                    positionNode.nextNode = positionNode.nextNode.nextNode;
+                }
             }
 
             return true;
@@ -127,6 +136,16 @@ public class LinkQueue<T> implements QueueInterface<T> {
         return new QueueIterator();
     }
 
+    public Node getPositionNode(int position) {
+        Node choosePosition = firstNode;
+
+        for (int i = 0; i < position - 2; i++) { //2 is start from 0 and minus 1 before the position we need
+            choosePosition = choosePosition.nextNode;
+        }
+
+        return choosePosition;
+    }
+
     public class QueueIterator implements Iterator<T> {
 
         Node nodeReturn;
@@ -145,7 +164,7 @@ public class LinkQueue<T> implements QueueInterface<T> {
             if (hasNext()) {
                 Node nodeFirst = nodeReturn;
                 nodeReturn = nodeReturn.nextNode;
-                return (T)nodeFirst.data;
+                return (T) nodeFirst.data;
             }
             return null;
         }
