@@ -144,6 +144,7 @@ public class SessionFrame extends javax.swing.JFrame {
     private void skipSongButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipSongButtonActionPerformed
         int chooseIndex = songQueueList.getLeadSelectionIndex();
         Session.songQueue.RemoveEntry(chooseIndex + 1);
+        refreshList();
     }//GEN-LAST:event_skipSongButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
@@ -160,6 +161,7 @@ public class SessionFrame extends javax.swing.JFrame {
 
     private void skipNextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipNextButtonActionPerformed
         Session.songQueue.removeFirst();
+        refreshList();
     }//GEN-LAST:event_skipNextButtonActionPerformed
 
     public void refreshList() {
@@ -178,7 +180,7 @@ public class SessionFrame extends javax.swing.JFrame {
             singerField.setText(Session.currentSong.member.name);
             songField.setText(Session.currentSong.song.name);
             Session.songEndTime = LocalTime.now().plusSeconds(Session.currentSong.song.songLength);
-
+            refreshList();
         }
 
     }

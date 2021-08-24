@@ -49,8 +49,6 @@ public class Session {
 
                 }
 
-                sessionFrame.refreshList();
-
             }
 
         } while (true);
