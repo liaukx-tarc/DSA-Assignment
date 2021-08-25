@@ -3,16 +3,16 @@ package Session;
 import java.time.LocalTime;
 import java.util.Iterator;
 import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
 
 public class SessionFrame extends javax.swing.JFrame {
 
     public static boolean adding = false;
 
-    DefaultListModel modList = new DefaultListModel();
-
     public SessionFrame() {
         initComponents();
-        songQueueList.setModel(modList);
+        String[] name = {"Singer", "Song"};
+        songQueueList.setModel(new DefaultTableModel(name,Session.songQueue.countEntry()));
     }
 
     @SuppressWarnings("unchecked")
@@ -20,8 +20,8 @@ public class SessionFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jInternalFrame1 = new javax.swing.JInternalFrame();
-        songQueuePane = new javax.swing.JScrollPane();
-        songQueueList = new javax.swing.JList<>();
+        songQueuePanel = new javax.swing.JScrollPane();
+        songQueueList = new javax.swing.JTable();
         curSingerLabel = new javax.swing.JLabel();
         songField = new javax.swing.JTextPane();
         curSongLabel = new javax.swing.JLabel();
@@ -37,8 +37,18 @@ public class SessionFrame extends javax.swing.JFrame {
         jInternalFrame1.setTitle("Singing Session");
         jInternalFrame1.setVisible(true);
 
-        songQueueList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        songQueuePane.setViewportView(songQueueList);
+        songQueueList.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        songQueuePanel.setViewportView(songQueueList);
 
         curSingerLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         curSingerLabel.setText("Current Singer : ");
@@ -81,7 +91,7 @@ public class SessionFrame extends javax.swing.JFrame {
             .addGroup(jInternalFrame1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(songQueuePane)
+                    .addComponent(songQueuePanel)
                     .addGroup(jInternalFrame1Layout.createSequentialGroup()
                         .addComponent(curSingerLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -113,8 +123,8 @@ public class SessionFrame extends javax.swing.JFrame {
                     .addComponent(curSingerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(curSongLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(songField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addComponent(songQueuePane, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(songQueuePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(songProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -124,7 +134,7 @@ public class SessionFrame extends javax.swing.JFrame {
                     .addComponent(skipNextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(skipSongButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addContainerGap(111, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -142,7 +152,7 @@ public class SessionFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void skipSongButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipSongButtonActionPerformed
-        int chooseIndex = songQueueList.getLeadSelectionIndex();
+        int chooseIndex = songQueueList.getSelectedRow();
         Session.songQueue.RemoveEntry(chooseIndex + 1);
         refreshList();
     }//GEN-LAST:event_skipSongButtonActionPerformed
@@ -165,11 +175,17 @@ public class SessionFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_skipNextButtonActionPerformed
 
     public void refreshList() {
-        modList.clear();
+        int i=0;
         Iterator<Session.ChooseSong> iterator = Session.songQueue.getIterator();
-
+        
+        String[] name = {"Singer", "Song"};
+        songQueueList.setModel(new DefaultTableModel(name,Session.songQueue.countEntry()));
+        
         while (iterator.hasNext()) {
-            modList.addElement(iterator.next());
+            Session.ChooseSong nextSong = iterator.next();
+            songQueueList.setValueAt(nextSong.member.name, i, 0);
+            songQueueList.setValueAt(nextSong.song.name, i, 1);
+            i++;
         }
     }
 
@@ -215,7 +231,7 @@ public class SessionFrame extends javax.swing.JFrame {
     private javax.swing.JTextPane songField;
     private javax.swing.JProgressBar songProgressBar;
     private javax.swing.JLabel songProgressLabel;
-    private javax.swing.JList<String> songQueueList;
-    private javax.swing.JScrollPane songQueuePane;
+    private javax.swing.JTable songQueueList;
+    private javax.swing.JScrollPane songQueuePanel;
     // End of variables declaration//GEN-END:variables
 }
