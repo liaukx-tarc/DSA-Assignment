@@ -1,5 +1,7 @@
 package Session;
 
+import MemberMaintenance.ListInterface;
+import MemberMaintenance.SortedArrayList;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -9,7 +11,7 @@ public class SongList {
     Song song3 = new Song("Hello",180);
     Song song4 = new Song("World",90);
     
-    public static List<Song> songList = new ArrayList<>();
+    public static ListInterface<Song> songList = new SortedArrayList<>();
     
     SongList(){
         songList.add(song1);
@@ -18,7 +20,7 @@ public class SongList {
         songList.add(song4);  
     }
     
-    public class Song {
+    public class Song implements Comparable<Song>{
 
         String name;
         int songLength;//in sec
@@ -26,6 +28,11 @@ public class SongList {
         Song(String name, int songLength) {
             this.name = name;
             this.songLength = songLength;
+        }
+
+        @Override
+        public int compareTo(Song o) {
+            return this.name.compareTo(o.name);
         }
     }
     
