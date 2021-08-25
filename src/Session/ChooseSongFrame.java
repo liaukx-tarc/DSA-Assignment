@@ -11,8 +11,8 @@ public class ChooseSongFrame extends javax.swing.JFrame {
         DefaultListModel mod = new DefaultListModel();
         songListUI.setModel(mod);
 
-        for (int i = 0; i < SongList.songList.size(); i++) {
-            mod.addElement(Session.songList.songList.get(i).name);
+        for (int i = 0; i < SongList.songList.getTotal(); i++) {
+            mod.addElement(Session.songList.songList.getEntry(i+1).name);
         }
     }
 
@@ -119,7 +119,7 @@ public class ChooseSongFrame extends javax.swing.JFrame {
         int placeChoose = Integer.parseInt(noField.getText());
         ChooseSong chooseSong;
 
-        chooseSong = Session.session.new ChooseSong(Session.currentUser, Session.songList.songList.get(selectNum));
+        chooseSong = Session.session.new ChooseSong(Session.currentUser, Session.songList.songList.getEntry(selectNum+1));
 
         if (placeChoose <= Session.songQueue.countEntry() && placeChoose != 0) {
             if(placeChoose < 0){
