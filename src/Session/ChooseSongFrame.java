@@ -1,28 +1,31 @@
 package Session;
 
-import javax.swing.DefaultListModel;
 import Session.Session.ChooseSong;
+import javax.swing.table.DefaultTableModel;
 
 public class ChooseSongFrame extends javax.swing.JFrame {
-
+    
     public ChooseSongFrame() {
         initComponents();
-
-        DefaultListModel mod = new DefaultListModel();
-        songListUI.setModel(mod);
-
-        for (int i = 0; i < SongList.songList.getTotal(); i++) {
-            mod.addElement(Session.songList.songList.getEntry(i+1).name);
+        String[] name = {"Name", "Song Legth"};
+        
+        songListUI.setModel(new DefaultTableModel(name,SongList.songList.getTotal()));
+        for (int i = 0; i < SongList.songList.getTotal(); i++) {            
+            String songLenght = String.format("%4d:%02d", Session.songList.songList.getEntry(i + 1).songLength / 60, Session.songList.songList.getEntry(i + 1).songLength % 60);
+            
+            songListUI.setValueAt(Session.songList.songList.getEntry(i + 1).name, i, 0);
+            songListUI.setValueAt(songLenght, i, 1);
         }
+        
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jComboBox1 = new javax.swing.JComboBox<>();
         songListPane = new javax.swing.JScrollPane();
-        songListUI = new javax.swing.JList<>();
+        songListUI = new javax.swing.JTable();
         cancelButton = new javax.swing.JButton();
         addButton = new javax.swing.JButton();
         skipQueueLabel = new javax.swing.JLabel();
@@ -115,14 +118,14 @@ public class ChooseSongFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        int selectNum = songListUI.getAnchorSelectionIndex();
+        int selectNum = songListUI.getSelectedRow();
         int placeChoose = Integer.parseInt(noField.getText());
         ChooseSong chooseSong;
-
-        chooseSong = Session.session.new ChooseSong(Session.currentUser, Session.songList.songList.getEntry(selectNum+1));
-
+        
+        chooseSong = Session.session.new ChooseSong(Session.currentUser, Session.songList.songList.getEntry(selectNum + 1));
+        
         if (placeChoose <= Session.songQueue.countEntry() && placeChoose != 0) {
-            if(placeChoose < 0){
+            if (placeChoose < 0) {
                 placeChoose = 1;
             }
             Session.songQueue.InsertEntry(chooseSong, placeChoose);
@@ -130,8 +133,8 @@ public class ChooseSongFrame extends javax.swing.JFrame {
         } else {
             Session.songQueue.addQueue(chooseSong);
         }
-
-        if(Session.currentSong == null){
+        
+        if (Session.currentSong == null) {
             Session.sessionFrame.nextSong();
         }
         Session.sessionFrame.refreshList();
@@ -152,6 +155,6 @@ public class ChooseSongFrame extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField noField;
     private javax.swing.JLabel skipQueueLabel;
     private javax.swing.JScrollPane songListPane;
-    private javax.swing.JList<String> songListUI;
+    private javax.swing.JTable songListUI;
     // End of variables declaration//GEN-END:variables
 }
