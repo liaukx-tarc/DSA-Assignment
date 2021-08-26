@@ -10,10 +10,10 @@ public class ChooseSongFrame extends javax.swing.JFrame {
         
         songListUI.setModel(new DefaultTableModel(name,SongList.songList.getTotal()));
         for (int i = 0; i < SongList.songList.getTotal(); i++) {
-            int songLenghtInSec = Session.songList.songList.getEntry(i + 1).getSongLength();
+            int songLenghtInSec = SongList.songList.getEntry(i + 1).getSongLength();
             String songLenght = String.format("%4d:%02d", songLenghtInSec / 60, songLenghtInSec % 60);
             
-            songListUI.setValueAt(Session.songList.songList.getEntry(i + 1).getName(), i, 0);
+            songListUI.setValueAt(SongList.songList.getEntry(i + 1).getName(), i, 0);
             songListUI.setValueAt(songLenght, i, 1);
         }
         
