@@ -77,7 +77,7 @@ public class LinkQueue<T> implements QueueInterface<T> {
                 }
 
             } else {
-                if (positionNode.equals(lastNode)) {
+                if (position == countEntry()) {
                     Node previousNode = getPositionNode(position - 1);
 
                     previousNode.nextNode = null;
@@ -120,11 +120,11 @@ public class LinkQueue<T> implements QueueInterface<T> {
         int count = 0;
         Iterator<T> iterator = getIterator();
 
-        while(iterator.hasNext()) {    
+        while (iterator.hasNext()) {
             iterator.next();
             count++;
         }
-        
+
         return count;
     }
 
@@ -171,7 +171,7 @@ public class LinkQueue<T> implements QueueInterface<T> {
 
     }
 
-    public class Node {
+    public class Node{
 
         private T data;
         private Node nextNode;

@@ -3,14 +3,14 @@ package Session;
 public class SelectedSong {
 
         private Session.Member memberSing;
-        private SongList.Song song;
+        private Song song;
 
         SelectedSong() {
             memberSing = null;
             song = null;
         }
 
-        SelectedSong(Session.Member member, SongList.Song song) {
+        SelectedSong(Session.Member member, Song song) {
             this.memberSing = member;
             this.song = song;
         }
@@ -28,7 +28,7 @@ public class SelectedSong {
             return memberSing;
         }
         
-        public SongList.Song getSong(){
+        public Song getSong(){
             return song;
         }
     }
