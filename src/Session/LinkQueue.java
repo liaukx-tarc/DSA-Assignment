@@ -28,7 +28,7 @@ public class LinkQueue<T> implements QueueInterface<T> {
     @Override
     public boolean removeFirst() {
         if (!checkEmpty()) {
-            if (firstNode == lastNode) {
+            if (firstNode.equals(lastNode)) {
                 firstNode = null;
                 lastNode = null;
                 return true;
@@ -71,10 +71,8 @@ public class LinkQueue<T> implements QueueInterface<T> {
 
             if (position <= 1) {
                 if (queueNum == 1) {
-                    System.out.print("ALL");
                     clearAll();
                 } else {
-                    System.out.print("2");
                     firstNode = firstNode.nextNode;
                 }
 
@@ -119,15 +117,14 @@ public class LinkQueue<T> implements QueueInterface<T> {
 
     @Override
     public int countEntry() {
-        Node currentNode = firstNode;
         int count = 0;
-        if (!checkEmpty()) {
-            while (currentNode != null) {
-                count++;
-                currentNode = currentNode.nextNode;
-            }
-        }
+        Iterator<T> iterator = getIterator();
 
+        while(iterator.hasNext()) {    
+            iterator.next();
+            count++;
+        }
+        
         return count;
     }
 
@@ -137,13 +134,16 @@ public class LinkQueue<T> implements QueueInterface<T> {
     }
 
     public Node getPositionNode(int position) {
-        Node choosePosition = firstNode;
+        Node chooseNode = firstNode;
+        Iterator<T> iterator = getIterator();
+        int i = 1;
 
-        for (int i = 0; i < position - 2; i++) { //2 is start from 0 and minus 1 before the position we need
-            choosePosition = choosePosition.nextNode;
+        while (iterator.hasNext() && i < position - 1) {
+            chooseNode = chooseNode.nextNode;
+            i++;
         }
 
-        return choosePosition;
+        return chooseNode;
     }
 
     public class QueueIterator implements Iterator<T> {
@@ -162,9 +162,9 @@ public class LinkQueue<T> implements QueueInterface<T> {
         @Override
         public T next() {
             if (hasNext()) {
-                Node nodeFirst = nodeReturn;
+                Node nodeNext = nodeReturn;
                 nodeReturn = nodeReturn.nextNode;
-                return (T) nodeFirst.data;
+                return (T) nodeNext.data;
             }
             return null;
         }

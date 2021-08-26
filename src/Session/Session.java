@@ -39,9 +39,10 @@ public class Session {
                         if (songQueue.checkEmpty()) {
                             currentSong = null;
                             sessionFrame.clearCurrentSong();
+                            
                         } else {
-
                             sessionFrame.nextSong();
+                            
                         }
                     }
 
