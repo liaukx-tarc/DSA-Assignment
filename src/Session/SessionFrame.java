@@ -1,17 +1,28 @@
 package Session;
 
+import MemberMaintenance.Member;
+import SongMaintenance.SongList;
 import java.time.LocalTime;
 import java.util.Iterator;
 import javax.swing.table.DefaultTableModel;
 
 public class SessionFrame extends javax.swing.JFrame {
 
-    public static boolean adding = false;
+    public static Session session;
+    public static SessionFrame sessionFrame;
+    public static SongList songList;
 
+    public static LocalTime songEndTime;
+    public boolean adding = false;
+    public static QueueInterface<SelectedSong> songQueue;
+    public static Member currentUser;
+    
     public SessionFrame() {
         initComponents();
         String[] name = {"Singer", "Song"};
-        songQueueList.setModel(new DefaultTableModel(name,Session.songQueue.countEntry()));
+        
+        songQueue = session.getSongQueue();
+        songQueueList.setModel(new DefaultTableModel(name, songQueue.countEntry()));
     }
 
     @SuppressWarnings("unchecked")
@@ -152,7 +163,9 @@ public class SessionFrame extends javax.swing.JFrame {
 
     private void skipSongButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipSongButtonActionPerformed
         int chooseIndex = songQueueList.getSelectedRow();
-        Session.songQueue.RemoveEntry(chooseIndex + 1);
+        songQueue = session.getSongQueue();
+        songQueue.RemoveEntry(chooseIndex + 1);
+        session.setSongQueue(songQueue);
         refreshList();
     }//GEN-LAST:event_skipSongButtonActionPerformed
 
@@ -160,7 +173,7 @@ public class SessionFrame extends javax.swing.JFrame {
         if (!adding) {
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
-                    new ChooseSongFrame().setVisible(true);
+                    new ChooseSongFrame(sessionFrame).setVisible(true);
                 }
             });
             adding = true;
@@ -169,53 +182,101 @@ public class SessionFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void skipNextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipNextButtonActionPerformed
-        Session.songQueue.removeFirst();
+        songQueue = session.getSongQueue();
+        songQueue.removeFirst();
+        session.setSongQueue(songQueue);
         refreshList();
     }//GEN-LAST:event_skipNextButtonActionPerformed
 
-    public void refreshList() {
-        int i=0;
-        Iterator<SelectedSong> iterator = Session.songQueue.getIterator();
+    public static void main(String[] args) {
+        currentUser = new Member("A100", "Kai Xian", "xiankai77@gmail.com", 'M', 'N', "29-6-2020");
         
+        session = new Session(currentUser);
+        sessionFrame = new SessionFrame();
+        songList = new SongList();
+                
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                sessionFrame.setVisible(true);
+            }
+        });
+
+        LocalTime nextUpdateTime = LocalTime.now().plusSeconds(1);
+
+        //Program Loop
+        do {
+            if (nextUpdateTime.isBefore(LocalTime.now())) {
+                nextUpdateTime = LocalTime.now().plusSeconds(1);
+
+                if (session.getCurrentSong() != null) {
+                    if (songEndTime.isBefore(LocalTime.now())) {
+
+                        songQueue = session.getSongQueue();
+                        if (songQueue.checkEmpty()) {
+                            session.setCurrentSong(null);
+                            sessionFrame.clearCurrentSong();
+
+                        } else {
+                            sessionFrame.nextSong();
+
+                        }
+                    }
+
+                    sessionFrame.updateProgress();
+
+                }
+
+            }
+
+        } while (true);
+
+    }
+
+    public void refreshList() {
+        int i = 0;
+        songQueue = session.getSongQueue();
+        Iterator<SelectedSong> iterator = songQueue.getIterator();
+
         String[] name = {"Singer", "Song"};
-        songQueueList.setModel(new DefaultTableModel(name,Session.songQueue.countEntry()));
+        songQueueList.setModel(new DefaultTableModel(name, songQueue.countEntry()));
         while (iterator.hasNext()) {
             SelectedSong nextSong = iterator.next();
-            songQueueList.setValueAt(nextSong.getMember().name, i, 0);
+            songQueueList.setValueAt(nextSong.getMember().getMemberName(), i, 0);
             songQueueList.setValueAt(nextSong.getSong().getName(), i, 1);
             i++;
         }
     }
 
     public void nextSong() {
-        if (!Session.songQueue.checkEmpty()) {
-            Session.currentSong = Session.songQueue.peek();
+        songQueue = session.getSongQueue();
+        if (!songQueue.checkEmpty()) {
+            session.setCurrentSong(songQueue.peek());
+            session.setSongQueue(songQueue);
 
-            singerField.setText(Session.currentSong.getMember().name);
-            songField.setText(Session.currentSong.getSong().getName());
-            Session.songEndTime = LocalTime.now().plusSeconds(Session.currentSong.getSong().getSongLength());
+            singerField.setText(session.getCurrentSong().getMember().getMemberName());
+            songField.setText(session.getCurrentSong().getSong().getName());
+            songEndTime = LocalTime.now().plusSeconds(session.getCurrentSong().getSong().getSongLength());
             refreshList();
         }
 
     }
 
     public void updateProgress() {
-        if (Session.currentSong != null) {
+        if (session.getCurrentSong() != null) {
             float currentTIme = (LocalTime.now().getHour() * 3600) + (LocalTime.now().getMinute() * 60) + (LocalTime.now().getSecond());
-            float endTime = (Session.songEndTime.getHour() * 3600) + (Session.songEndTime.getMinute() * 60) + (Session.songEndTime.getSecond());
-            float songLength = Session.currentSong.getSong().getSongLength();
-            
+            float endTime = (songEndTime.getHour() * 3600) + (songEndTime.getMinute() * 60) + (songEndTime.getSecond());
+            float songLength = session.getCurrentSong().getSong().getSongLength();
+
             float progressPercent = (songLength - (endTime - currentTIme)) / (songLength) * 100;
-            
+
             songProgressBar.setValue((int) progressPercent);
-        }
-        else{
+        } else {
             songProgressBar.setValue(0);
         }
 
     }
-    
-    public void clearCurrentSong(){
+
+    public void clearCurrentSong() {
         songField.setText(null);
         singerField.setText(null);
     }

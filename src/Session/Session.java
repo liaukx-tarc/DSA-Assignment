@@ -1,67 +1,42 @@
 package Session;
 
-import SongMaintenance.SongList;
-import java.time.LocalTime;
+import MemberMaintenance.ListInterface;
+import MemberMaintenance.Member;
+import MemberMaintenance.SortedArrayList;
 
 public class Session {
-    public static Member currentUser;
-    public static QueueInterface<SelectedSong> songQueue = new LinkQueue<SelectedSong>();
-    public static SongList songList = new SongList();
-    public static Session session;
-    public static SessionFrame sessionFrame;
-    public static SelectedSong currentSong;
-    public static LocalTime songEndTime;
-
-    Session() {
-        currentUser = new Member("Kai Xian");
+    private ListInterface<Member> memberList = new SortedArrayList<Member>();
+    private QueueInterface<SelectedSong> songQueue = new LinkQueue<SelectedSong>();
+    private SelectedSong currentSong;
+   
+    public Session(Member currentUser) {
+        memberList.add(currentUser);
+    }
+   
+    //Song Queue
+    public QueueInterface<SelectedSong> getSongQueue(){
+        return songQueue;
+    }
+    
+    public void setSongQueue(QueueInterface<SelectedSong> songQueue){
+        this.songQueue = songQueue;
+    }
+    
+    //Member List
+    public ListInterface<Member> getMemberList(){
+        return memberList;
     }
 
-    public static void main(String[] args) {
-        session = new Session();
-        int i = 0;
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                sessionFrame = new SessionFrame();
-                sessionFrame.setVisible(true);
-            }
-        });
-
-        LocalTime nextUpdateTime = LocalTime.now().plusSeconds(1);
-
-        //Program Loop
-        do {
-            if (nextUpdateTime.isBefore(LocalTime.now())) {
-                nextUpdateTime = LocalTime.now().plusSeconds(1);
-
-                if (currentSong != null) {
-                    if (songEndTime.isBefore(LocalTime.now())) {
-                        
-                        if (songQueue.checkEmpty()) {
-                            currentSong = null;
-                            sessionFrame.clearCurrentSong();
-                            
-                        } else {
-                            sessionFrame.nextSong();
-                            
-                        }
-                    }
-
-                    sessionFrame.updateProgress();
-
-                }
-
-            }
-
-        } while (true);
-
+    public void setMemberList(ListInterface<Member> memberList){
+        this.memberList = memberList;
+    }   
+    
+    //current Song
+    public SelectedSong getCurrentSong(){
+        return currentSong;
     }
-
-    public class Member {
-
-        String name;
-
-        Member(String name) {
-            this.name = name;
-        }
+    
+    public void setCurrentSong(SelectedSong currentSong){
+        this.currentSong = currentSong;
     }
 }
