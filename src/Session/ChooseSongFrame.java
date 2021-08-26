@@ -122,7 +122,7 @@ public class ChooseSongFrame extends javax.swing.JFrame {
         int placeChoose = Integer.parseInt(noField.getText());
         SelectedSong chooseSong;
         
-        chooseSong = new SelectedSong(Session.currentUser, Session.songList.songList.getEntry(selectNum + 1));
+        chooseSong = new SelectedSong(Session.currentUser, SongList.songList.getEntry(selectNum + 1));
         
         if (placeChoose <= Session.songQueue.countEntry() && placeChoose != 0) {
             if (placeChoose < 0) {

@@ -179,7 +179,6 @@ public class SessionFrame extends javax.swing.JFrame {
         
         String[] name = {"Singer", "Song"};
         songQueueList.setModel(new DefaultTableModel(name,Session.songQueue.countEntry()));
-        
         while (iterator.hasNext()) {
             SelectedSong nextSong = iterator.next();
             songQueueList.setValueAt(nextSong.getMember().name, i, 0);
