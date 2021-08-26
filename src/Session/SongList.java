@@ -2,8 +2,6 @@ package Session;
 
 import MemberMaintenance.ListInterface;
 import MemberMaintenance.SortedArrayList;
-import java.util.List;
-import java.util.ArrayList;
 
 public class SongList {
 
@@ -25,8 +23,8 @@ public class SongList {
 
     public class Song implements Comparable<Song> {
 
-        String name;
-        int songLength;//in sec
+        private String name;
+        private int songLength;//in sec
 
         Song(String name, int songLength) {
             this.name = name;
@@ -45,6 +43,14 @@ public class SongList {
             string += String.format("%4d:%02d", songLength / 60, songLength % 60);
             System.out.println(string);
             return string;
+        }
+        
+        public String getName(){
+            return name;
+        }
+        
+        public int getSongLength(){
+            return songLength;
         }
     }
 
