@@ -1,6 +1,6 @@
 package Session;
 
-import SongMaintenance.*;
+import SongMaintenance.SongList;
 import java.time.LocalTime;
 
 public class Session {

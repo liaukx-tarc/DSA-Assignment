@@ -74,6 +74,11 @@ public class SortedArrayList<T extends Comparable<T>> implements ListInterface<T
             return false;
     }
     
+    public boolean clear(){
+        totalEntries = 0;
+        return true;
+    }
+    
     public int getTotal(){
 
         return totalEntries;

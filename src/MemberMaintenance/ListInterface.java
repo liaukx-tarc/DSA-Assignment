@@ -16,6 +16,7 @@ public interface ListInterface<T extends Comparable<T>> {
     public T getEntry(int position);
     public int[] include(T entry);
     public boolean replace(int position, T entry);
+    public boolean clear();
     public int getTotal();
     public boolean isFull();
     
