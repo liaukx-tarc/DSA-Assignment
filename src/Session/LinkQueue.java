@@ -67,7 +67,7 @@ public class LinkQueue<T> implements QueueInterface<T> {
     public boolean RemoveEntry(int position) {
         int queueNum = countEntry();
         if (position > 0) {
-            Node positionNode = getPositionNode(position);
+            Node previousNode = getPositionNode(position);
 
             if (position <= 1) {
                 if (queueNum == 1) {
@@ -78,16 +78,15 @@ public class LinkQueue<T> implements QueueInterface<T> {
 
             } else {
                 if (position == countEntry()) {
-                    Node previousNode = getPositionNode(position - 1);
-
+                    
                     previousNode.nextNode = null;
                     lastNode = previousNode;
-
+                    System.out.println(countEntry());
                 } else {
-                    positionNode.nextNode = positionNode.nextNode.nextNode;
+                    previousNode.nextNode = previousNode.nextNode.nextNode;
                 }
             }
-
+            System.out.println(countEntry());
             return true;
         }
 

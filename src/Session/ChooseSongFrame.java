@@ -1,20 +1,22 @@
 package Session;
 
-import SongMaintenance.SongList;
 import javax.swing.table.DefaultTableModel;
 
 public class ChooseSongFrame extends javax.swing.JFrame {
     
-    public ChooseSongFrame() {
+    SessionFrame sessionFrame;
+    
+    public ChooseSongFrame(SessionFrame sessionFrame) {
         initComponents();
+        this.sessionFrame = sessionFrame;
         String[] name = {"Name", "Song Legth"};
         
-        songListUI.setModel(new DefaultTableModel(name,SongList.songList.getTotal()));
-        for (int i = 0; i < SongList.songList.getTotal(); i++) {
-            int songLenghtInSec = SongList.songList.getEntry(i + 1).getSongLength();
+        songListUI.setModel(new DefaultTableModel(name,sessionFrame.songList.songList.getTotal()));
+        for (int i = 0; i < sessionFrame.songList.songList.getTotal(); i++) {
+            int songLenghtInSec = sessionFrame.songList.songList.getEntry(i + 1).getSongLength();
             String songLenght = String.format("%4d:%02d", songLenghtInSec / 60, songLenghtInSec % 60);
             
-            songListUI.setValueAt(SongList.songList.getEntry(i + 1).getName(), i, 0);
+            songListUI.setValueAt(sessionFrame.songList.songList.getEntry(i + 1).getName(), i, 0);
             songListUI.setValueAt(songLenght, i, 1);
         }
         
@@ -115,7 +117,7 @@ public class ChooseSongFrame extends javax.swing.JFrame {
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         super.dispose();
-        SessionFrame.adding = false;
+        sessionFrame.adding = false;
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
@@ -123,25 +125,27 @@ public class ChooseSongFrame extends javax.swing.JFrame {
         int placeChoose = Integer.parseInt(noField.getText());
         SelectedSong chooseSong;
         
-        chooseSong = new SelectedSong(Session.currentUser, SongList.songList.getEntry(selectNum + 1));
+        chooseSong = new SelectedSong(sessionFrame.currentUser, sessionFrame.songList.songList.getEntry(selectNum + 1));
         
-        if (placeChoose <= Session.songQueue.countEntry() && placeChoose != 0) {
+        if (placeChoose <= sessionFrame.session.getSongQueue().countEntry() && placeChoose != 0) {
             if (placeChoose < 0) {
                 placeChoose = 1;
             }
-            Session.songQueue.InsertEntry(chooseSong, placeChoose);
+            sessionFrame.songQueue.InsertEntry(chooseSong, placeChoose);
+            sessionFrame.session.setSongQueue(sessionFrame.songQueue);
             
         } else {
-            Session.songQueue.addQueue(chooseSong);
+            sessionFrame.songQueue.addQueue(chooseSong);
+            sessionFrame.session.setSongQueue(sessionFrame.songQueue);
         }
         
-        if (Session.currentSong == null) {
-            Session.sessionFrame.nextSong();
+        if (sessionFrame.session.getCurrentSong() == null) {
+            sessionFrame.nextSong();
         }
-        Session.sessionFrame.refreshList();
+        sessionFrame.refreshList();
         
         super.dispose();
-        SessionFrame.adding = false;
+        sessionFrame.adding = false;
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void noFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noFieldActionPerformed
