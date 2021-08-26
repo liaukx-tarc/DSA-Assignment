@@ -1,5 +1,7 @@
 package Session;
 
+import SongMaintenance.Song;
+
 public class SelectedSong {
 
         private Session.Member memberSing;

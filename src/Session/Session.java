@@ -1,9 +1,9 @@
 package Session;
 
+import SongMaintenance.*;
 import java.time.LocalTime;
 
 public class Session {
-
     public static Member currentUser;
     public static QueueInterface<SelectedSong> songQueue = new LinkQueue<SelectedSong>();
     public static SongList songList = new SongList();
