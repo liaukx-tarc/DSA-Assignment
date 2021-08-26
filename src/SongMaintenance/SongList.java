@@ -1,4 +1,4 @@
-package Session;
+package SongMaintenance;
 
 import MemberMaintenance.ListInterface;
 import MemberMaintenance.SortedArrayList;
@@ -13,12 +13,14 @@ public class SongList {
 
     public static ListInterface<Song> songList = new SortedArrayList<>();
 
-    SongList() {
+    public SongList() {
         songList.add(song1);
         songList.add(song2);
         songList.add(song3);
         songList.add(song4);
         songList.add(song5);
     }   
+    
+    
 
 }
