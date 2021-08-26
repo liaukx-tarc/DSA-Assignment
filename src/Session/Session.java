@@ -1,16 +1,15 @@
 package Session;
 
-import Session.SongList.Song;
 import java.time.LocalTime;
 
 public class Session {
 
     public static Member currentUser;
-    public static QueueInterface<ChooseSong> songQueue = new LinkQueue<ChooseSong>();
+    public static QueueInterface<SelectedSong> songQueue = new LinkQueue<SelectedSong>();
     public static SongList songList = new SongList();
     public static Session session;
     public static SessionFrame sessionFrame;
-    public static ChooseSong currentSong;
+    public static SelectedSong currentSong;
     public static LocalTime songEndTime;
 
     Session() {
@@ -29,6 +28,7 @@ public class Session {
 
         LocalTime nextUpdateTime = LocalTime.now().plusSeconds(1);
 
+        //Program Loop
         do {
             if (nextUpdateTime.isBefore(LocalTime.now())) {
                 nextUpdateTime = LocalTime.now().plusSeconds(1);
@@ -53,30 +53,6 @@ public class Session {
 
         } while (true);
 
-    }
-
-    public class ChooseSong {
-
-        Member member;
-        Song song;
-
-        ChooseSong() {
-
-        }
-
-        ChooseSong(Member member, Song song) {
-            this.member = member;
-            this.song = song;
-        }
-
-        @Override
-        public String toString() {
-            String string;
-
-            string = String.format("%-50s |  %-50s", member.name, song.name);
-
-            return string;
-        }
     }
 
     public class Member {

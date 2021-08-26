@@ -1,6 +1,5 @@
 package Session;
 
-import Session.Session.ChooseSong;
 import javax.swing.table.DefaultTableModel;
 
 public class ChooseSongFrame extends javax.swing.JFrame {
@@ -10,10 +9,11 @@ public class ChooseSongFrame extends javax.swing.JFrame {
         String[] name = {"Name", "Song Legth"};
         
         songListUI.setModel(new DefaultTableModel(name,SongList.songList.getTotal()));
-        for (int i = 0; i < SongList.songList.getTotal(); i++) {            
-            String songLenght = String.format("%4d:%02d", Session.songList.songList.getEntry(i + 1).songLength / 60, Session.songList.songList.getEntry(i + 1).songLength % 60);
+        for (int i = 0; i < SongList.songList.getTotal(); i++) {
+            int songLenghtInSec = Session.songList.songList.getEntry(i + 1).getSongLength();
+            String songLenght = String.format("%4d:%02d", songLenghtInSec / 60, songLenghtInSec % 60);
             
-            songListUI.setValueAt(Session.songList.songList.getEntry(i + 1).name, i, 0);
+            songListUI.setValueAt(Session.songList.songList.getEntry(i + 1).getName(), i, 0);
             songListUI.setValueAt(songLenght, i, 1);
         }
         
@@ -120,9 +120,9 @@ public class ChooseSongFrame extends javax.swing.JFrame {
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         int selectNum = songListUI.getSelectedRow();
         int placeChoose = Integer.parseInt(noField.getText());
-        ChooseSong chooseSong;
+        SelectedSong chooseSong;
         
-        chooseSong = Session.session.new ChooseSong(Session.currentUser, Session.songList.songList.getEntry(selectNum + 1));
+        chooseSong = new SelectedSong(Session.currentUser, Session.songList.songList.getEntry(selectNum + 1));
         
         if (placeChoose <= Session.songQueue.countEntry() && placeChoose != 0) {
             if (placeChoose < 0) {

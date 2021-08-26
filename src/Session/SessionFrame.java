@@ -2,7 +2,6 @@ package Session;
 
 import java.time.LocalTime;
 import java.util.Iterator;
-import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 
 public class SessionFrame extends javax.swing.JFrame {
@@ -176,15 +175,15 @@ public class SessionFrame extends javax.swing.JFrame {
 
     public void refreshList() {
         int i=0;
-        Iterator<Session.ChooseSong> iterator = Session.songQueue.getIterator();
+        Iterator<SelectedSong> iterator = Session.songQueue.getIterator();
         
         String[] name = {"Singer", "Song"};
         songQueueList.setModel(new DefaultTableModel(name,Session.songQueue.countEntry()));
         
         while (iterator.hasNext()) {
-            Session.ChooseSong nextSong = iterator.next();
-            songQueueList.setValueAt(nextSong.member.name, i, 0);
-            songQueueList.setValueAt(nextSong.song.name, i, 1);
+            SelectedSong nextSong = iterator.next();
+            songQueueList.setValueAt(nextSong.getMember().name, i, 0);
+            songQueueList.setValueAt(nextSong.getSong().getName(), i, 1);
             i++;
         }
     }
@@ -193,9 +192,9 @@ public class SessionFrame extends javax.swing.JFrame {
         if (!Session.songQueue.checkEmpty()) {
             Session.currentSong = Session.songQueue.peek();
 
-            singerField.setText(Session.currentSong.member.name);
-            songField.setText(Session.currentSong.song.name);
-            Session.songEndTime = LocalTime.now().plusSeconds(Session.currentSong.song.songLength);
+            singerField.setText(Session.currentSong.getMember().name);
+            songField.setText(Session.currentSong.getSong().getName());
+            Session.songEndTime = LocalTime.now().plusSeconds(Session.currentSong.getSong().getSongLength());
             refreshList();
         }
 
@@ -205,7 +204,9 @@ public class SessionFrame extends javax.swing.JFrame {
         if (Session.currentSong != null) {
             float currentTIme = (LocalTime.now().getHour() * 3600) + (LocalTime.now().getMinute() * 60) + (LocalTime.now().getSecond());
             float endTime = (Session.songEndTime.getHour() * 3600) + (Session.songEndTime.getMinute() * 60) + (Session.songEndTime.getSecond());
-            float progressPercent = (Session.currentSong.song.songLength - (endTime - currentTIme)) / (Session.currentSong.song.songLength) * 100;
+            float songLength = Session.currentSong.getSong().getSongLength();
+            
+            float progressPercent = (songLength - (endTime - currentTIme)) / (songLength) * 100;
             
             songProgressBar.setValue((int) progressPercent);
         }
