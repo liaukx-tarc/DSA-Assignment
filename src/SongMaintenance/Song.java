@@ -12,24 +12,24 @@ import java.util.Comparator;
  * @author user
  */
 public class Song implements Comparable<Song>{
-    private String name;
+    private String songName;
         private int songLength;//in sec
 
         Song(String name, int songLength) {
-            this.name = name;
+            this.songName = name;
             this.songLength = songLength;
         }
 
         @Override
         public String toString() {
             String string;
-            string = String.format("%-50s | ", name);
+            string = String.format("%-50s | ", songName);
             string += String.format("%4d:%02d", songLength / 60, songLength % 60);
             return string;
         }
         
         public String getName(){
-            return name;
+            return songName;
         }
         
         public int getSongLength(){
@@ -38,6 +38,6 @@ public class Song implements Comparable<Song>{
 
     @Override
         public int compareTo(Song song) {
-            return name.compareTo(song.getName());
+            return songName.compareTo(song.getName());
         }
     }

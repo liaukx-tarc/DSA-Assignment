@@ -12,7 +12,7 @@ import java.util.Comparator;
  * @author kaiel
  * @param <T>
  */
-public interface ListInterface<T> {
+public interface SortedListInterface<T> {
     
     public boolean add(T entry);
     public boolean remove(int position);

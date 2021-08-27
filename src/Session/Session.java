@@ -1,12 +1,12 @@
 package Session;
 
-import MemberMaintenance.ListInterface;
 import MemberMaintenance.Member;
 import MemberMaintenance.SortedArrayList;
+import MemberMaintenance.SortedListInterface;
 
 public class Session implements Comparable<Session> {
 
-    private ListInterface<Member> memberList = new SortedArrayList<Member>();
+    private SortedListInterface<Member> memberList = new SortedArrayList<Member>();
     private QueueInterface<SelectedSong> songQueue = new LinkQueue<SelectedSong>();
     private SelectedSong currentSong;
     private String sessionName;
@@ -26,11 +26,11 @@ public class Session implements Comparable<Session> {
     }
 
     //Member List
-    public ListInterface<Member> getMemberList() {
+    public SortedListInterface<Member> getMemberList() {
         return memberList;
     }
 
-    public void setMemberList(ListInterface<Member> memberList) {
+    public void setMemberList(SortedListInterface<Member> memberList) {
         this.memberList = memberList;
     }
 
