@@ -4,39 +4,55 @@ import MemberMaintenance.ListInterface;
 import MemberMaintenance.Member;
 import MemberMaintenance.SortedArrayList;
 
-public class Session {
+public class Session implements Comparable<Session> {
+
     private ListInterface<Member> memberList = new SortedArrayList<Member>();
     private QueueInterface<SelectedSong> songQueue = new LinkQueue<SelectedSong>();
     private SelectedSong currentSong;
-   
-    public Session(Member currentUser) {
-        memberList.add(currentUser);
+    private String sessionName;
+
+    public Session(String sessionName) {
+        this.sessionName = sessionName;
+        currentSong = null;
     }
-   
+
     //Song Queue
-    public QueueInterface<SelectedSong> getSongQueue(){
+    public QueueInterface<SelectedSong> getSongQueue() {
         return songQueue;
     }
-    
-    public void setSongQueue(QueueInterface<SelectedSong> songQueue){
+
+    public void setSongQueue(QueueInterface<SelectedSong> songQueue) {
         this.songQueue = songQueue;
     }
-    
+
     //Member List
-    public ListInterface<Member> getMemberList(){
+    public ListInterface<Member> getMemberList() {
         return memberList;
     }
 
-    public void setMemberList(ListInterface<Member> memberList){
+    public void setMemberList(ListInterface<Member> memberList) {
         this.memberList = memberList;
-    }   
-    
+    }
+
     //current Song
-    public SelectedSong getCurrentSong(){
+    public SelectedSong getCurrentSong() {
         return currentSong;
     }
-    
-    public void setCurrentSong(SelectedSong currentSong){
+
+    public void setCurrentSong(SelectedSong currentSong) {
         this.currentSong = currentSong;
+    }
+
+    public String getSessionName() {
+        return sessionName;
+    }
+
+    public void setSessionName(String sessionName) {
+        this.sessionName = sessionName;
+    }
+
+    @Override
+    public int compareTo(Session o) {
+        return sessionName.compareTo(o.getSessionName());
     }
 }

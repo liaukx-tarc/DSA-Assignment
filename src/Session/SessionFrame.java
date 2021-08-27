@@ -1,26 +1,24 @@
 package Session;
 
-import MemberMaintenance.Member;
-import SongMaintenance.SongList;
+import static Session.SingingSession.session;
+import static Session.SingingSession.songEndTime;
+import static Session.SingingSession.songQueue;
 import java.time.LocalTime;
 import java.util.Iterator;
+import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 
 public class SessionFrame extends javax.swing.JFrame {
 
-    public static Session session;
-    public static SessionFrame sessionFrame;
-    public static SongList songList;
-
-    public static LocalTime songEndTime;
-    public boolean adding = false;
-    public static QueueInterface<SelectedSong> songQueue;
-    public static Member currentUser;
+    public static boolean adding = false;
+    DefaultListModel memberJoinList = new DefaultListModel();
     
     public SessionFrame() {
         initComponents();
-        String[] name = {"Singer", "Song"};
+        String[] name = {"No.", "Singer", "Song", "Duration"};
         
+        jInternalFrame1.setTitle(session.getSessionName());       
+        memberJoinedList.setModel(memberJoinList);
         songQueue = session.getSongQueue();
         songQueueList.setModel(new DefaultTableModel(name, songQueue.countEntry()));
     }
@@ -41,6 +39,10 @@ public class SessionFrame extends javax.swing.JFrame {
         skipNextButton = new javax.swing.JButton();
         songProgressLabel = new javax.swing.JLabel();
         songProgressBar = new javax.swing.JProgressBar();
+        durationField = new javax.swing.JTextPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        memberJoinedList = new javax.swing.JList<>();
+        memberJoinedText = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -58,6 +60,8 @@ public class SessionFrame extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        songQueueList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        songQueueList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         songQueuePanel.setViewportView(songQueueList);
 
         curSingerLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -106,7 +110,7 @@ public class SessionFrame extends javax.swing.JFrame {
                         .addComponent(curSingerLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(singerField, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(curSongLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(songField, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -117,11 +121,15 @@ public class SessionFrame extends javax.swing.JFrame {
                             .addComponent(skipNextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(songProgressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jInternalFrame1Layout.createSequentialGroup()
                                 .addComponent(skipSongButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jInternalFrame1Layout.createSequentialGroup()
+                                .addComponent(songProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(durationField, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jInternalFrame1Layout.setVerticalGroup(
@@ -135,27 +143,58 @@ public class SessionFrame extends javax.swing.JFrame {
                     .addComponent(songField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(songQueuePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(12, 12, 12)
                 .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(songProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(songProgressLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(songProgressLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(durationField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
                 .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(skipNextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(skipSongButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(111, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
+
+        memberJoinedList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(memberJoinedList);
+
+        memberJoinedText.setEditable(false);
+        memberJoinedText.setBorder(null);
+        memberJoinedText.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        memberJoinedText.setText("Member Joined");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jInternalFrame1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                        .addComponent(memberJoinedText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(53, 53, 53))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(memberJoinedText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
 
         pack();
@@ -173,7 +212,7 @@ public class SessionFrame extends javax.swing.JFrame {
         if (!adding) {
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
-                    new ChooseSongFrame(sessionFrame).setVisible(true);
+                    new ChooseSongFrame().setVisible(true);
                 }
             });
             adding = true;
@@ -188,62 +227,31 @@ public class SessionFrame extends javax.swing.JFrame {
         refreshList();
     }//GEN-LAST:event_skipNextButtonActionPerformed
 
-    public static void main(String[] args) {
-        currentUser = new Member("A100", "Kai Xian", "xiankai77@gmail.com", 'M', 'N', "29-6-2020");
-        
-        session = new Session(currentUser);
-        sessionFrame = new SessionFrame();
-        songList = new SongList();
-                
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                sessionFrame.setVisible(true);
-            }
-        });
-
-        LocalTime nextUpdateTime = LocalTime.now().plusSeconds(1);
-
-        //Program Loop
-        do {
-            if (nextUpdateTime.isBefore(LocalTime.now())) {
-                nextUpdateTime = LocalTime.now().plusSeconds(1);
-
-                if (session.getCurrentSong() != null) {
-                    if (songEndTime.isBefore(LocalTime.now())) {
-
-                        songQueue = session.getSongQueue();
-                        if (songQueue.checkEmpty()) {
-                            session.setCurrentSong(null);
-                            sessionFrame.clearCurrentSong();
-
-                        } else {
-                            sessionFrame.nextSong();
-
-                        }
-                    }
-
-                    sessionFrame.updateProgress();
-
-                }
-
-            }
-
-        } while (true);
-
-    }
-
     public void refreshList() {
         int i = 0;
         songQueue = session.getSongQueue();
         Iterator<SelectedSong> iterator = songQueue.getIterator();
 
-        String[] name = {"Singer", "Song"};
+        String[] name = {"No.", "Singer", "Song", "Duration"};
         songQueueList.setModel(new DefaultTableModel(name, songQueue.countEntry()));
+
         while (iterator.hasNext()) {
             SelectedSong nextSong = iterator.next();
-            songQueueList.setValueAt(nextSong.getMember().getMemberName(), i, 0);
-            songQueueList.setValueAt(nextSong.getSong().getName(), i, 1);
+
+            int songLenghtInSec = nextSong.getSong().getSongLength();
+            String songLenght = String.format("%4d:%02d", songLenghtInSec / 60, songLenghtInSec % 60);
+            songQueueList.setValueAt(i + 1 + ".", i, 0);
+            songQueueList.setValueAt(nextSong.getMember().getMemberName(), i, 1);
+            songQueueList.setValueAt(nextSong.getSong().getName(), i, 2);
+            songQueueList.setValueAt(songLenght, i, 3);
             i++;
+        }
+    }
+    
+    public void updateMemberJoinedList(){
+        memberJoinList.clear();
+        for (int i = 0; i < session.getMemberList().getTotal(); i++) {
+            memberJoinList.addElement(session.getMemberList().getEntry(i+1).getMemberName());
         }
     }
 
@@ -263,6 +271,7 @@ public class SessionFrame extends javax.swing.JFrame {
 
     public void updateProgress() {
         if (session.getCurrentSong() != null) {
+            //progress bar
             float currentTIme = (LocalTime.now().getHour() * 3600) + (LocalTime.now().getMinute() * 60) + (LocalTime.now().getSecond());
             float endTime = (songEndTime.getHour() * 3600) + (songEndTime.getMinute() * 60) + (songEndTime.getSecond());
             float songLength = session.getCurrentSong().getSong().getSongLength();
@@ -270,6 +279,13 @@ public class SessionFrame extends javax.swing.JFrame {
             float progressPercent = (songLength - (endTime - currentTIme)) / (songLength) * 100;
 
             songProgressBar.setValue((int) progressPercent);
+
+            //Duration Time
+            int timePass = (int)songLength - ((int)endTime - (int)currentTIme);
+            String durationText = "";
+            durationText += String.format("%4d:%02d", timePass / 60, timePass % 60) + " / " + String.format("%4d:%02d", (int)songLength / 60, (int)songLength % 60);
+            durationField.setText(durationText);
+            
         } else {
             songProgressBar.setValue(0);
         }
@@ -285,7 +301,11 @@ public class SessionFrame extends javax.swing.JFrame {
     private javax.swing.JButton addButton;
     private javax.swing.JLabel curSingerLabel;
     private javax.swing.JLabel curSongLabel;
+    private javax.swing.JTextPane durationField;
     private javax.swing.JInternalFrame jInternalFrame1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList<String> memberJoinedList;
+    private javax.swing.JTextPane memberJoinedText;
     private javax.swing.JTextPane singerField;
     private javax.swing.JButton skipNextButton;
     private javax.swing.JButton skipSongButton;

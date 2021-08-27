@@ -78,15 +78,13 @@ public class LinkQueue<T> implements QueueInterface<T> {
 
             } else {
                 if (position == countEntry()) {
-                    
+
                     previousNode.nextNode = null;
                     lastNode = previousNode;
-                    System.out.println(countEntry());
                 } else {
                     previousNode.nextNode = previousNode.nextNode.nextNode;
                 }
             }
-            System.out.println(countEntry());
             return true;
         }
 
@@ -170,7 +168,7 @@ public class LinkQueue<T> implements QueueInterface<T> {
 
     }
 
-    public class Node{
+    public class Node {
 
         private T data;
         private Node nextNode;
