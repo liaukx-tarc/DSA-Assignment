@@ -1,27 +1,28 @@
 package Session;
 
+import static Session.SingingSession.currentUser;
+import static Session.SingingSession.session;
+import static Session.SingingSession.songList;
+import static Session.SingingSession.songQueue;
 import javax.swing.table.DefaultTableModel;
 
 public class ChooseSongFrame extends javax.swing.JFrame {
-    
-    SessionFrame sessionFrame;
-    
-    public ChooseSongFrame(SessionFrame sessionFrame) {
+
+    public ChooseSongFrame() {
         initComponents();
-        this.sessionFrame = sessionFrame;
         String[] name = {"Name", "Song Legth"};
-        
-        songListUI.setModel(new DefaultTableModel(name,sessionFrame.songList.songList.getTotal()));
-        for (int i = 0; i < sessionFrame.songList.songList.getTotal(); i++) {
-            int songLenghtInSec = sessionFrame.songList.songList.getEntry(i + 1).getSongLength();
+
+        songListUI.setModel(new DefaultTableModel(name, songList.songList.getTotal()));
+        for (int i = 0; i < songList.songList.getTotal(); i++) {
+            int songLenghtInSec = songList.songList.getEntry(i + 1).getSongLength();
             String songLenght = String.format("%4d:%02d", songLenghtInSec / 60, songLenghtInSec % 60);
-            
-            songListUI.setValueAt(sessionFrame.songList.songList.getEntry(i + 1).getName(), i, 0);
+
+            songListUI.setValueAt(songList.songList.getEntry(i + 1).getName(), i, 0);
             songListUI.setValueAt(songLenght, i, 1);
         }
-        
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -117,35 +118,40 @@ public class ChooseSongFrame extends javax.swing.JFrame {
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         super.dispose();
-        sessionFrame.adding = false;
+        SessionFrame.adding = false;
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        int selectNum = songListUI.getSelectedRow();
-        int placeChoose = Integer.parseInt(noField.getText());
-        SelectedSong chooseSong;
-        
-        chooseSong = new SelectedSong(sessionFrame.currentUser, sessionFrame.songList.songList.getEntry(selectNum + 1));
-        
-        if (placeChoose <= sessionFrame.session.getSongQueue().countEntry() && placeChoose != 0) {
-            if (placeChoose < 0) {
-                placeChoose = 1;
-            }
-            sessionFrame.songQueue.InsertEntry(chooseSong, placeChoose);
-            sessionFrame.session.setSongQueue(sessionFrame.songQueue);
+
+        if (songListUI.getSelectedRowCount() == 1) {
             
-        } else {
-            sessionFrame.songQueue.addQueue(chooseSong);
-            sessionFrame.session.setSongQueue(sessionFrame.songQueue);
+            int selectNum = songListUI.getSelectedRow();
+            int placeChoose = Integer.parseInt(noField.getText());
+            SelectedSong chooseSong;
+
+            chooseSong = new SelectedSong(currentUser, songList.songList.getEntry(selectNum + 1));
+
+            if (placeChoose <= session.getSongQueue().countEntry() && placeChoose != 0) {
+                if (placeChoose < 0) {
+                    placeChoose = 1;
+                }
+                songQueue.InsertEntry(chooseSong, placeChoose);
+                session.setSongQueue(songQueue);
+
+            } else {
+                songQueue.addQueue(chooseSong);
+                session.setSongQueue(songQueue);
+            }
+
+            if (session.getCurrentSong() == null) {
+                SingingSession.sessionFrame.nextSong();
+            }
+            SingingSession.sessionFrame.refreshList();
+
+            super.dispose();
+            SessionFrame.adding = false;
         }
-        
-        if (sessionFrame.session.getCurrentSong() == null) {
-            sessionFrame.nextSong();
-        }
-        sessionFrame.refreshList();
-        
-        super.dispose();
-        sessionFrame.adding = false;
+
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void noFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noFieldActionPerformed
