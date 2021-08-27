@@ -64,24 +64,29 @@ public class SortedArrayList<T extends Comparable<T>> implements ListInterface<T
         
     @Override
     public T getEntry(int position){
-        
-        T entry = array[position - 1];
+        T entry = null;
+        if(position > 0)
+        {
+            entry = array[position - 1];
+        }
         return entry;
     }
                 
     @Override
-    public int[] include(T entry){
+    public int[] include(String stringInput){
         int i = 0;
         int n = 0;
-        int[] entriesFound = new int [arraySize];
+        int[] entriesFound = new int [totalEntries + 1];
         while (i < totalEntries)
         {
-            if(entry.equals(array[i]))
+            if(array[i].toString().toUpperCase().contains(stringInput.toUpperCase()))
             {
-                entriesFound[n] = i;
+                n++;
+                entriesFound[n] = i + 1; // get position instead of array index
             }
             i++;
         }
+        entriesFound[0] = n;
         return entriesFound;
     }
         
