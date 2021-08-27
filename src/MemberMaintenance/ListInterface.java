@@ -17,11 +17,12 @@ public interface ListInterface<T> {
     public boolean add(T entry);
     public boolean remove(int position);
     public T getEntry(int position);
-    public int[] include(String stringInput);
+    public int[] include(T entry);
     public boolean replace(int position, T entry);
     public boolean clear();
     public int getTotal();
     public boolean isFull();
+    public boolean isEmpty();
     public void setComparator(Comparator comparator);
     public void sort();
 
