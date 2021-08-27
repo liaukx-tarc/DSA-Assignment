@@ -5,6 +5,8 @@
  */
 package MemberMaintenance;
 
+import java.util.Comparator;
+
 /**
  *
  * @author kaiel
@@ -19,5 +21,6 @@ public interface ListInterface<T extends Comparable<T>> {
     public boolean clear();
     public int getTotal();
     public boolean isFull();
+    public void sort(Comparator comparator);
     
 }

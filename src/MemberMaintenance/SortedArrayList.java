@@ -5,6 +5,8 @@
  */
 package MemberMaintenance;
 
+import java.util.Comparator;
+
 /**
  *
  * @author kaiel
@@ -114,5 +116,14 @@ public class SortedArrayList<T extends Comparable<T>> implements ListInterface<T
 
         System.arraycopy(oldArray, 0, array, 0, arraySize);
         arraySize*=2;
+    }
+    
+    public void sort(Comparator comparator)
+    {
+        if(totalEntries > 1)
+        {
+            MergeSort mergeSort = new MergeSort(comparator);
+            mergeSort.sort(array,0,totalEntries-1);
+        }
     }
 }

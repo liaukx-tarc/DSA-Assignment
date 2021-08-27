@@ -6,8 +6,6 @@
 package MemberMaintenance;
 import SongMaintenance.Song;
 
-import java.time.LocalDate;
-
 /**
  *
  * @author kaiel
@@ -18,7 +16,6 @@ public class Member implements Comparable<Member>{
     private String memberName;
     private String memberEmail;
     private char memberGender;
-    private char memberType;
     private String dateJoined;
     private ListInterface<Song> favSongList;
     
@@ -28,18 +25,16 @@ public class Member implements Comparable<Member>{
         memberName = null;
         memberEmail = null;
         memberGender = '\0';
-        memberType = '\0';
         dateJoined = null;
         favSongList = null;
     }
     
-    public Member(String memberID, String memberName, String memberEmail, char memberGender, char memberType, String dateJoined)
+    public Member(String memberID, String memberName, String memberEmail, char memberGender, String dateJoined)
     {
         this.memberID = memberID;
         this.memberName = memberName;
         this.memberEmail = memberEmail;
         this.memberGender = memberGender;
-        this.memberType = memberType;
         this.dateJoined = dateJoined;
         this.favSongList = new SortedArrayList<Song>();
     }
@@ -76,14 +71,6 @@ public class Member implements Comparable<Member>{
         this.memberGender = memberGender;
     }
     
-    public char getMemberType(){
-        return memberType;
-    }
-    
-    public void setMemberType(char memberType){
-        this.memberType = memberType;
-    }
-    
     public String getDateJoined(){
         return dateJoined;
     }
@@ -103,8 +90,13 @@ public class Member implements Comparable<Member>{
     @Override
     public int compareTo(Member member) {
         
-        return this.compareTo(member);
+        return memberID.compareTo(member.getMemberID());
     }
     
+    @Override
+    public String toString(){
+    
+        return String.format("%-8s%-30s%-40s%-8c%-11s",memberID, memberName, memberEmail, memberGender, dateJoined);
+    }
     
 }
