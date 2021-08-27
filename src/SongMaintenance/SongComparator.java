@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MemberMaintenance;
+package SongMaintenance;
 
 import java.util.Comparator;
 
@@ -11,14 +11,13 @@ import java.util.Comparator;
  *
  * @author kaiel
  */
-public class NameComparator implements Comparator {
+public class SongComparator implements Comparator {
 
     @Override
     public int compare(Object o1, Object o2) {
-        Member m1 = (Member)o1;
-        Member m2 = (Member)o2;
-        
-        return m1.getMemberName().compareTo(m2.getMemberName());
+        Song s1 = (Song) o1;
+        Song s2 = (Song) o2;
+        return s1.getName().compareToIgnoreCase(s2.getName());
     }
 
     @Override

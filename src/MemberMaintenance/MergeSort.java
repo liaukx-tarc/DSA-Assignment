@@ -12,7 +12,7 @@ import java.util.Comparator;
  * @author kaiel
  */
 public class MergeSort<T> {
-    private Comparator<T> comparator;
+    private final Comparator<T> comparator;
     public MergeSort(Comparator<T> comparator){
         this.comparator = comparator;
     }
@@ -20,8 +20,8 @@ public class MergeSort<T> {
     {
         int subArray1Size = midIndex - firstIndex + 1;
         int subArray2Size = lastIndex - midIndex;
-        T[] subArray1 = (T[]) new Comparable[subArray1Size];
-        T[] subArray2 = (T[]) new Comparable[subArray2Size];
+        T[] subArray1 = (T[]) new Object[subArray1Size];
+        T[] subArray2 = (T[]) new Object[subArray2Size];
         int sub1Index;
         int sub2Index;
         int mainIndex = firstIndex;
@@ -71,14 +71,17 @@ public class MergeSort<T> {
  
     void sort(T[] mainArray, int firstIndex, int lastIndex)
     {
-        if (firstIndex < lastIndex) 
+        if(comparator != null)
         {
-            int midIndex =(firstIndex + lastIndex)/2;
- 
-            sort(mainArray, firstIndex, midIndex);
-            sort(mainArray, midIndex + 1, lastIndex);
- 
-            merge(mainArray, firstIndex, midIndex, lastIndex);
+            if (firstIndex < lastIndex) 
+            {
+                int midIndex =(firstIndex + lastIndex)/2;
+
+                sort(mainArray, firstIndex, midIndex);
+                sort(mainArray, midIndex + 1, lastIndex);
+
+                merge(mainArray, firstIndex, midIndex, lastIndex);
+            }
         }
     }
 }
