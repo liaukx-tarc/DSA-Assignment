@@ -19,14 +19,14 @@ public class MemberMaintenance {
     private ListInterface<Member> memberList  = new SortedArrayList<Member>();
     private int memberDeleted = 0;
     private int memberIDNum = 650000;
+    private int[] searchResult = null;
     
     public void memberController(){
         memberList.setComparator(new MemberComparator(0));
         
         //For testing
-        SongList songList = new SongList();
         Member member1 = new Member("A0002","Kai Xian", "xiankai77@gmail.com", 'M', "2021-08-20");
-        member1.setFavSongList(songList.songList);
+        member1.setFavSongList(SongList.songList);
         Member member2 = new Member("A0003","Zi Xiu", "zx123@gmail.com", 'M', "2021-08-21");
         Member member3 = new Member("A0001","mok", "mokgae@gmail.com", 'M', "2021-08-19");
         Member member4 = new Member("A0004","Alice", "alice@gmail.com", 'M', "2021-08-23");
@@ -173,8 +173,8 @@ public class MemberMaintenance {
     }
     public void sortMember(){
         boolean isExit = false;
-        int inputSort = 0;
-        int inputOrder = 0;
+        int inputSort;
+        int inputOrder;
         
         while(!isExit)
         {
@@ -231,16 +231,91 @@ public class MemberMaintenance {
     }
     
     public void searchMember(){
-        
+        boolean isExit = false;
+        System.out.println("--------------------------------------------------------------------------------------------------------");
+        System.out.print("Please enter search keyword: ");
+        String searchKeyword = userInput.nextLine();
+        searchResult = memberList.include(searchKeyword);
+        do{
+            System.out.println("--------------------------------------------------------------------------------------------------------\n"
+            + "Member Search\n--------------------------------------------------------------------------------------------------------");
+            System.out.println("No.     ID      Name                          Email                                  Gender   DateJoined");
+            for(int i=1;i<=searchResult[0];i++)
+            {
+                System.out.println((i)+".      "+memberList.getEntry(searchResult[i]));
+            }
+            System.out.println("--------------------------------------------------------------------------------------------------------");
+            System.out.println(" "+searchResult[0]+" member(s) found.");
+            System.out.println("--------------------------------------------------------------------------------------------------------");
+            System.out.println("1. Search Member");
+            System.out.println("2. View member's favourite Song List");
+            System.out.println("3. Edit member information");
+            System.out.println("4. Delete member");
+            System.out.println("5. Return to previous menu");
+            System.out.println("--------------------------------------------------------------------------------------------------------");
+            System.out.print("Please enter your choice(1-4): ");
+            int input = Integer.parseInt(userInput.nextLine());
+                switch(input)
+                {
+                    case 1:
+                        searchMember();
+                        isExit = true;
+                        break;
+                    case 2:
+                        viewFavSongList();
+                        break;
+                    case 3:
+                        editMember();
+                        searchResult = memberList.include(searchKeyword);
+                        break;
+                    case 4:
+                        removeMember();
+                        searchResult = memberList.include(searchKeyword);
+                        break;
+                    case 5:
+                        isExit = true;
+                        break;
+                    default: 
+                        System.out.println("Invalid Input.Please Enter Again.");
+                        userInput.nextLine();
+                        break;
+                }
+        }while(!isExit);
+        searchResult = null;
     }
     
     public void viewFavSongList(){
-        System.out.println("--------------------------------------------------------------------------------------------------------");
-        System.out.print("Please select a member (Member No.): ");
-        int input = Integer.parseInt(userInput.nextLine());
-        if(input > 0 && input <= memberList.getTotal())
+        int totalMember;
+        ListInterface<Song> favSongList;
+        int input;
+        if (searchResult == null)
         {
-            ListInterface<Song> favSongList = memberList.getEntry(input).getFavSongList();
+            totalMember = memberList.getTotal();
+        }
+        else
+        {
+            totalMember = searchResult[0];
+        }
+        if (totalMember != 0)
+        {
+            do{
+                System.out.println("--------------------------------------------------------------------------------------------------------");
+                System.out.print("Please select a member (Member No.): ");
+                input = Integer.parseInt(userInput.nextLine());
+                if (input < 1 || input > totalMember)
+                {
+                    System.out.println("Invalid selection.Please Enter Again.");
+                    userInput.nextLine();
+                }
+            }while (input < 1 || input > totalMember);
+            if(searchResult == null)
+            {
+                favSongList = memberList.getEntry(input).getFavSongList();
+            }
+            else 
+            {
+                favSongList = memberList.getEntry(searchResult[input]).getFavSongList();
+            }
             int totalSong = favSongList.getTotal();
             System.out.println("--------------------------------------------------------------------------------------------------------\n"
         + "Favourite Song List\n--------------------------------------------------------------------------------------------------------");
@@ -255,14 +330,167 @@ public class MemberMaintenance {
             System.out.println("Press any key to return.");
             userInput.nextLine();
         }
+        else
+        {
+            System.out.println("No member found. Press any key to continue."); 
+            userInput.nextLine();
+        }
     }
     
     public void editMember(){
-        
+        int totalMember;
+        int input;
+        int memberIndex;
+        String stringInput;
+        char charInput;
+        boolean isExit = false;
+        Member newInfo = new Member();
+        Member oldInfo;
+        if (searchResult == null)
+        {
+            totalMember = memberList.getTotal();
+        }
+        else
+        {
+            totalMember = searchResult[0];
+        }
+        if (totalMember != 0)
+        {
+            do{
+                System.out.println("--------------------------------------------------------------------------------------------------------");
+                System.out.print("Please select a member (Member No.): ");
+                input = Integer.parseInt(userInput.nextLine());
+                if (input < 1 || input > totalMember)
+                {
+                    System.out.println("Invalid selection.Please Enter Again.");
+                    userInput.nextLine();
+                }
+            }while (input < 1 || input > totalMember);
+            if(searchResult == null)
+            {
+                memberIndex = input;
+            }
+            else
+            {
+                memberIndex = searchResult[input];
+            }
+            System.out.println("--------------------------------------------------------------------------------------------------------\n"
+                    + "Edit member\n--------------------------------------------------------------------------------------------------------");
+            System.out.print("Enter name: ");
+            stringInput = userInput.nextLine();
+            newInfo.setMemberName(stringInput);
+            System.out.print("Enter Email address: ");
+            stringInput = userInput.nextLine();
+            newInfo.setMemberEmail(stringInput);
+            do{
+                System.out.print("Enter gender (M/F): ");
+                charInput = userInput.next().toUpperCase().charAt(0);
+                userInput.nextLine();
+                if(charInput != 'M' && charInput != 'F')
+                {
+                    System.out.println("Invalid Input.Please Enter Again.");
+                    userInput.nextLine();
+                }
+            }while(charInput != 'M' && charInput != 'F');
+            newInfo.setMemberGender(charInput);
+            oldInfo = memberList.getEntry(memberIndex);
+            System.out.println("--------------------------------------------------------------------------------------------------------");
+            System.out.println("Name : "+oldInfo.getMemberName()+"--->"+newInfo.getMemberName());
+            System.out.println("Email Address : "+oldInfo.getMemberEmail()+"--->"+newInfo.getMemberEmail());
+            System.out.println("Gender : "+oldInfo.getMemberGender()+"--->"+newInfo.getMemberGender());
+            System.out.println("--------------------------------------------------------------------------------------------------------");
+            do{
+                System.out.println("Save change?(Y/N)");
+                charInput = userInput.next().toUpperCase().charAt(0);
+                userInput.nextLine();
+                switch (charInput) {
+                    case 'Y':
+                        newInfo.setMemberID(oldInfo.getMemberID());
+                        newInfo.setDateJoined(oldInfo.getDateJoined());
+                        newInfo.setFavSongList(oldInfo.getFavSongList());
+                        isExit = memberList.replace(memberIndex,newInfo);
+                        break;
+                    case 'N':
+                        isExit = true;
+                        break;
+                    default:
+                        System.out.println("Invalid Input.Please Enter Again.");
+                        userInput.nextLine();
+                        break;
+                }
+            }while(!isExit);
+        }
+        else
+        {
+            System.out.println("No member found. Press any key to continue."); 
+            userInput.nextLine();
+        }
     }
     
     public void removeMember(){
-        
+        int totalMember;
+        int input;
+        int memberIndex;
+        char charInput;
+        boolean isExit = false;
+        if (searchResult == null)
+        {
+            totalMember = memberList.getTotal();
+        }
+        else
+        {
+            totalMember = searchResult[0];
+        }
+        if (totalMember != 0)
+        {
+            do{
+                System.out.println("--------------------------------------------------------------------------------------------------------");
+                System.out.print("Please select a member (Member No.): ");
+                input = Integer.parseInt(userInput.nextLine());
+                if (input < 1 || input > totalMember)
+                {
+                    System.out.println("Invalid selection.Please Enter Again.");
+                    userInput.nextLine();
+                }
+            }while (input < 1 || input > totalMember);
+            if(searchResult == null)
+            {
+                memberIndex = input;
+            }
+            else
+            {
+                memberIndex = searchResult[input];
+            }
+            System.out.println("--------------------------------------------------------------------------------------------------------\n"
+                    + "Delete member\n--------------------------------------------------------------------------------------------------------");
+            System.out.println("--------------------------------------------------------------------------------------------------------");
+            System.out.println("No.     ID      Name                          Email                                  Gender   DateJoined");
+            System.out.println("1.      "+memberList.getEntry(memberIndex));
+            System.out.println("--------------------------------------------------------------------------------------------------------");
+            do{
+                System.out.println("Confirm delete?(Y/N)");
+                charInput = userInput.next().toUpperCase().charAt(0);
+                userInput.nextLine();
+                switch (charInput) {
+                    case 'Y':
+                        isExit = memberList.remove(memberIndex);
+                        memberDeleted++;
+                        break;
+                    case 'N':
+                        isExit = true;
+                        break;
+                    default:
+                        System.out.println("Invalid Input.Please Enter Again.");
+                        userInput.nextLine();
+                        break;
+                }
+            }while(!isExit);
+        }
+        else
+        {
+            System.out.println("No member found. Press any key to continue."); 
+            userInput.nextLine();
+        }
     }
     
 

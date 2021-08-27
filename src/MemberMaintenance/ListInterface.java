@@ -17,7 +17,7 @@ public interface ListInterface<T> {
     public boolean add(T entry);
     public boolean remove(int position);
     public T getEntry(int position);
-    public int[] include(T entry);
+    public int[] include(String stringInput);
     public boolean replace(int position, T entry);
     public boolean clear();
     public int getTotal();
