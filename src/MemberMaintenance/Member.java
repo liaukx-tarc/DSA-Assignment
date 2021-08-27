@@ -5,6 +5,7 @@
  */
 package MemberMaintenance;
 import SongMaintenance.Song;
+import java.util.Comparator;
 
 /**
  *
@@ -36,7 +37,7 @@ public class Member implements Comparable<Member>{
         this.memberEmail = memberEmail;
         this.memberGender = memberGender;
         this.dateJoined = dateJoined;
-        this.favSongList = new SortedArrayList<Song>();
+        this.favSongList = new SortedArrayList<>();
     }
     
     public String getMemberID(){
@@ -83,14 +84,8 @@ public class Member implements Comparable<Member>{
         return favSongList;
     }
     
-    public void setfavSongList(ListInterface<Song> favSongList){
+    public void setFavSongList(ListInterface<Song> favSongList){
         this.favSongList = favSongList;
-    }
-    
-    @Override
-    public int compareTo(Member member) {
-        
-        return memberID.compareTo(member.getMemberID());
     }
     
     @Override
@@ -98,5 +93,9 @@ public class Member implements Comparable<Member>{
     
         return String.format("%-8s%-30s%-40s%-8c%-11s",memberID, memberName, memberEmail, memberGender, dateJoined);
     }
-    
+
+    @Override
+    public int compareTo(Member member) {
+        return memberID.compareTo(member.getMemberID());
+    }
 }

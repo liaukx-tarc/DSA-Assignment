@@ -10,8 +10,9 @@ import java.util.Comparator;
 /**
  *
  * @author kaiel
+ * @param <T>
  */
-public interface ListInterface<T extends Comparable<T>> {
+public interface ListInterface<T> {
     
     public boolean add(T entry);
     public boolean remove(int position);
@@ -21,6 +22,8 @@ public interface ListInterface<T extends Comparable<T>> {
     public boolean clear();
     public int getTotal();
     public boolean isFull();
-    public void sort(Comparator comparator);
+    public void setComparator(Comparator comparator);
+    public void sort();
+
     
 }

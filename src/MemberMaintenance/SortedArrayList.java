@@ -4,12 +4,12 @@
  * and open the template in the editor.
  */
 package MemberMaintenance;
-
 import java.util.Comparator;
 
 /**
  *
  * @author kaiel
+ * @param <T>
  */
 public class SortedArrayList<T extends Comparable<T>> implements ListInterface<T> {
     
@@ -17,28 +17,43 @@ public class SortedArrayList<T extends Comparable<T>> implements ListInterface<T
     private T[] array;
     private int totalEntries;
     private int arrangeState;
+    private Comparator comparator;
     
     public SortedArrayList(){
         arraySize = 5;
         totalEntries = 0;
         array = (T[]) new Comparable[arraySize];
+        comparator = null;
     }
-    
+        
+    @Override
     public boolean add(T entry){
         int i = 0;
         arrangeState = 0;
         
         if(isFull())
             reSize();
-        while (i < totalEntries && entry.compareTo(array[i]) > 0) {
-            i++;
+        if(comparator != null)
+        {
+            while (i < totalEntries && comparator.compare(entry,array[i]) > 0) 
+            {
+                i++;
+            }
+        }
+        else
+        {
+            while (i < totalEntries && entry.compareTo(array[i]) > 0) 
+            {
+                i++;
+            }
         }
         reArrange(i,arrangeState);
         array[i] = entry;
         totalEntries++;
         return true;
     }
-    
+        
+    @Override
     public boolean remove(int position){
         arrangeState = 1;
         reArrange(position - 1,arrangeState);
@@ -46,13 +61,15 @@ public class SortedArrayList<T extends Comparable<T>> implements ListInterface<T
         array[totalEntries] = null;
         return true;
     }
-    
+        
+    @Override
     public T getEntry(int position){
         
         T entry = array[position - 1];
         return entry;
     }
-            
+                
+    @Override
     public int[] include(T entry){
         int i = 0;
         int n = 0;
@@ -67,7 +84,8 @@ public class SortedArrayList<T extends Comparable<T>> implements ListInterface<T
         }
         return entriesFound;
     }
-    
+        
+    @Override
     public boolean replace(int position, T entry){
         
         if(remove(position)&&add(entry))
@@ -75,22 +93,40 @@ public class SortedArrayList<T extends Comparable<T>> implements ListInterface<T
         else
             return false;
     }
-    
+        
+    @Override
     public boolean clear(){
         totalEntries = 0;
         return true;
     }
-    
+        
+    @Override
     public int getTotal(){
 
         return totalEntries;
     }
-    
+        
+    @Override
     public boolean isFull(){
       
         return totalEntries == arraySize;
     }
     
+    @Override
+    public void setComparator(Comparator comparator) {
+        this.comparator = comparator; 
+    }
+    
+    @Override
+    public void sort()
+    {
+        if(totalEntries > 1)
+        {
+            MergeSort mergeSort = new MergeSort(comparator);
+            mergeSort.sort(array,0,totalEntries-1);
+        }
+    }
+
     private void reArrange(int position, int state){
         int i;
         int arrangeNo = position;
@@ -116,14 +152,5 @@ public class SortedArrayList<T extends Comparable<T>> implements ListInterface<T
 
         System.arraycopy(oldArray, 0, array, 0, arraySize);
         arraySize*=2;
-    }
-    
-    public void sort(Comparator comparator)
-    {
-        if(totalEntries > 1)
-        {
-            MergeSort mergeSort = new MergeSort(comparator);
-            mergeSort.sort(array,0,totalEntries-1);
-        }
     }
 }
