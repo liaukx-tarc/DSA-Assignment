@@ -42,6 +42,7 @@ public class MemberMaintenance {
         //memberList.add(member5);
         
         boolean isExit = false;
+        int input = 0;
         
         while(!isExit)
         {
@@ -51,7 +52,16 @@ public class MemberMaintenance {
             System.out.println("2. View member list ");
             System.out.println("3. Exit ");
             System.out.print("Please enter your choice(1-3): ");
-            int input = Integer.parseInt(userInput.nextLine());
+            if(userInput.hasNextInt())
+            {
+                input = userInput.nextInt();
+                userInput.nextLine();
+            }
+            else
+            {
+                userInput.nextLine();
+                input = 0;
+            }
             switch(input)
             {
                 case 1:
@@ -126,6 +136,7 @@ public class MemberMaintenance {
     
     public void displayMember(){
         boolean isExit = false;
+        int input = 0;
         while(!isExit)
         {
             System.out.println("--------------------------------------------------------------------------------------------------------\n"
@@ -146,7 +157,16 @@ public class MemberMaintenance {
             System.out.println("6. Return to previous menu");
             System.out.println("--------------------------------------------------------------------------------------------------------");
             System.out.print("Please enter your choice(1-6): ");
-            int input = Integer.parseInt(userInput.nextLine());
+            if(userInput.hasNextInt())
+            {
+                input = userInput.nextInt();
+                userInput.nextLine();
+            }
+            else
+            {
+                userInput.nextLine();
+                input = 0;
+            }
                 switch(input)
                 {
                     case 1:
@@ -176,8 +196,8 @@ public class MemberMaintenance {
     }
     public void sortMember(){
         boolean isExit = false;
-        int inputSort;
-        int inputOrder;
+        int inputSort = 0;
+        int inputOrder = 0;
         
         while(!isExit)
         {
@@ -191,7 +211,16 @@ public class MemberMaintenance {
             System.out.println("5. Return to previous menu");
             System.out.println("--------------------------------------------------------------------------------------------------------");
             System.out.print("Please enter your choice(1-5): ");
-            inputSort = Integer.parseInt(userInput.nextLine());
+            if(userInput.hasNextInt())
+            {
+                inputSort = userInput.nextInt();
+                userInput.nextLine();
+            }
+            else
+            {
+                userInput.nextLine();
+                inputSort = 0;
+            }
             if(inputSort >= 1 && inputSort <= 4)
             {
                 do{
@@ -202,7 +231,16 @@ public class MemberMaintenance {
                     System.out.println("2. Descending Order");
                     System.out.println("--------------------------------------------------------------------------------------------------------");
                     System.out.print("Please enter your choice(1-2): ");
-                    inputOrder = Integer.parseInt(userInput.nextLine());
+                    if(userInput.hasNextInt())
+                    {
+                        inputOrder = userInput.nextInt();
+                        userInput.nextLine();
+                    }
+                    else
+                    {
+                        userInput.nextLine();
+                        inputOrder = 0;
+                    }
                     switch (inputOrder) 
                     {
                         case 1:
@@ -235,6 +273,7 @@ public class MemberMaintenance {
     
     public void searchMember(){
         boolean isExit = false;
+        int input = 0;
         System.out.println("--------------------------------------------------------------------------------------------------------");
         System.out.print("Please enter search keyword: ");
         String searchKeyword = userInput.nextLine();
@@ -258,7 +297,16 @@ public class MemberMaintenance {
             System.out.println("5. Return to previous menu");
             System.out.println("--------------------------------------------------------------------------------------------------------");
             System.out.print("Please enter your choice(1-5): ");
-            int input = Integer.parseInt(userInput.nextLine());
+            if(userInput.hasNextInt())
+                {
+                    input = userInput.nextInt();
+                    userInput.nextLine();
+                }
+                else
+                {
+                    userInput.nextLine();
+                    input = 0;
+                }
                 switch(input)
                 {
                     case 1:
@@ -305,7 +353,16 @@ public class MemberMaintenance {
             do{
                 System.out.println("--------------------------------------------------------------------------------------------------------");
                 System.out.print("Please select a member (Member No.): ");
-                input = Integer.parseInt(userInput.nextLine());
+                if(userInput.hasNextInt())
+                {
+                    input = userInput.nextInt();
+                    userInput.nextLine();
+                }
+                else
+                {
+                    userInput.nextLine();
+                    input = 0;
+                }
                 if (input < 1 || input > totalMember)
                 {
                     System.out.println("Invalid selection.Please Enter Again.");
@@ -363,7 +420,16 @@ public class MemberMaintenance {
             do{
                 System.out.println("--------------------------------------------------------------------------------------------------------");
                 System.out.print("Please select a member (Member No.): ");
-                input = Integer.parseInt(userInput.nextLine());
+                if(userInput.hasNextInt())
+                {
+                    input = userInput.nextInt();
+                    userInput.nextLine();
+                }
+                else
+                {
+                    userInput.nextLine();
+                    input = 0;
+                }
                 if (input < 1 || input > totalMember)
                 {
                     System.out.println("Invalid selection.Please Enter Again.");
@@ -450,7 +516,16 @@ public class MemberMaintenance {
             do{
                 System.out.println("--------------------------------------------------------------------------------------------------------");
                 System.out.print("Please select a member (Member No.): ");
-                input = Integer.parseInt(userInput.nextLine());
+                if(userInput.hasNextInt())
+                {
+                    input = userInput.nextInt();
+                    userInput.nextLine();
+                }
+                else
+                {
+                    userInput.nextLine();
+                    input = 0;
+                }
                 if (input < 1 || input > totalMember)
                 {
                     System.out.println("Invalid selection.Please Enter Again.");
