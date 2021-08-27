@@ -1,10 +1,11 @@
 package Session;
 
+import MemberMaintenance.Member;
 import SongMaintenance.Song;
 
 public class SelectedSong {
 
-        private Session.Member memberSing;
+        private Member memberSing;
         private Song song;
 
         SelectedSong() {
@@ -12,7 +13,7 @@ public class SelectedSong {
             song = null;
         }
 
-        SelectedSong(Session.Member member, Song song) {
+        SelectedSong(Member member, Song song) {
             this.memberSing = member;
             this.song = song;
         }
@@ -21,12 +22,12 @@ public class SelectedSong {
         public String toString() {
             String string;
 
-            string = String.format("%-50s |  %-50s", memberSing.name, song.getName());
+            string = String.format("%-50s |  %-50s", memberSing.getMemberName(), song.getName());
 
             return string;
         }
         
-        public Session.Member getMember(){
+        public Member getMember(){
             return memberSing;
         }
         
