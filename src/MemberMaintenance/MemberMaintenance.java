@@ -19,6 +19,7 @@ public class MemberMaintenance {
     private ListInterface<Member> memberList  = new SortedArrayList<Member>();
     private int memberDeleted = 0;
     private int memberIDNum = 650000;
+    private Member memberSearch = new Member();
     private int[] searchResult = null;
     
     public void memberController(){
@@ -237,7 +238,8 @@ public class MemberMaintenance {
         System.out.println("--------------------------------------------------------------------------------------------------------");
         System.out.print("Please enter search keyword: ");
         String searchKeyword = userInput.nextLine();
-        searchResult = memberList.include(searchKeyword);
+        memberSearch.setMemberName(searchKeyword);
+        searchResult = memberList.include(memberSearch);
         do{
             System.out.println("--------------------------------------------------------------------------------------------------------\n"
             + "Member Search\n--------------------------------------------------------------------------------------------------------");
@@ -268,11 +270,11 @@ public class MemberMaintenance {
                         break;
                     case 3:
                         editMember();
-                        searchResult = memberList.include(searchKeyword);
+                        searchResult = memberList.include(memberSearch);
                         break;
                     case 4:
                         removeMember();
-                        searchResult = memberList.include(searchKeyword);
+                        searchResult = memberList.include(memberSearch);
                         break;
                     case 5:
                         isExit = true;

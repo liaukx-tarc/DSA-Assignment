@@ -73,13 +73,13 @@ public class SortedArrayList<T extends Comparable<T>> implements ListInterface<T
     }
                 
     @Override
-    public int[] include(String stringInput){
+    public int[] include(T entry){
         int i = 0;
         int n = 0;
         int[] entriesFound = new int [totalEntries + 1];
         while (i < totalEntries)
         {
-            if(array[i].toString().toUpperCase().contains(stringInput.toUpperCase()))
+            if(array[i].toString().toUpperCase().contains(entry.toString().toUpperCase()))
             {
                 n++;
                 entriesFound[n] = i + 1; // get position instead of array index
@@ -115,6 +115,12 @@ public class SortedArrayList<T extends Comparable<T>> implements ListInterface<T
     public boolean isFull(){
       
         return totalEntries == arraySize;
+    }
+    
+    @Override
+    public boolean isEmpty(){
+      
+        return totalEntries == 0;
     }
     
     @Override

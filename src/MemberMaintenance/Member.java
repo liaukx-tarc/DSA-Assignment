@@ -91,6 +91,10 @@ public class Member implements Comparable<Member>{
     @Override
     public String toString(){
     
+        if(memberID == null && memberEmail == null && dateJoined == null)
+        {
+            return memberName;
+        }
         return String.format("%-8s%-30s%-40s%-8c%-11s",memberID, memberName, memberEmail, memberGender, dateJoined);
     }
 
