@@ -5,15 +5,15 @@
  */
 package Session;
 
-import MemberMaintenance.ListInterface;
 import MemberMaintenance.Member;
 import MemberMaintenance.SortedArrayList;
 import SongMaintenance.SongList;
 import java.time.LocalTime;
+import MemberMaintenance.SortedListInterface;
 
 public class SingingSession {
 
-    public static ListInterface<Session> sessionList = new SortedArrayList<>();
+    public static SortedListInterface<Session> sessionList = new SortedArrayList<>();
 
     public static Session session;
     public static ChooseSessionFrame chooseSessionFrame;

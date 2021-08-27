@@ -18,7 +18,7 @@ public class Member implements Comparable<Member>{
     private String memberEmail;
     private char memberGender;
     private String dateJoined;
-    private ListInterface<Song> favSongList;
+    private SortedListInterface<Song> favSongList;
     
     public Member()
     {
@@ -80,11 +80,11 @@ public class Member implements Comparable<Member>{
         this.dateJoined = dateJoined;
     }
     
-    public ListInterface<Song> getFavSongList(){
+    public SortedListInterface<Song> getFavSongList(){
         return favSongList;
     }
     
-    public void setFavSongList(ListInterface<Song> favSongList){
+    public void setFavSongList(SortedListInterface<Song> favSongList){
         this.favSongList = favSongList;
     }
     

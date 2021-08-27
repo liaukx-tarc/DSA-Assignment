@@ -11,7 +11,7 @@ import java.util.Comparator;
  * @author kaiel
  * @param <T>
  */
-public class SortedArrayList<T extends Comparable<T>> implements ListInterface<T> {
+public class SortedArrayList<T extends Comparable<T>> implements SortedListInterface<T> {
     
     private static int arraySize;
     private T[] array;

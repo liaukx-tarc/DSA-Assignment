@@ -16,7 +16,7 @@ import java.time.LocalDate;
 public class MemberMaintenance {
 
     private Scanner userInput = new Scanner(System.in);
-    private ListInterface<Member> memberList  = new SortedArrayList<Member>();
+    private SortedListInterface<Member> memberList  = new SortedArrayList<Member>();
     private int memberDeleted = 0;
     private int memberIDNum = 650000;
     private Member memberSearch = new Member();
@@ -290,7 +290,7 @@ public class MemberMaintenance {
     
     public void viewFavSongList(){
         int totalMember;
-        ListInterface<Song> favSongList;
+        SortedListInterface<Song> favSongList;
         int input;
         if (searchResult == null)
         {

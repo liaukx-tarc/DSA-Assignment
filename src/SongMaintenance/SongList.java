@@ -1,8 +1,8 @@
 package SongMaintenance;
 
-import MemberMaintenance.ListInterface;
 import MemberMaintenance.SortedArrayList;
 import java.util.Comparator;
+import MemberMaintenance.SortedListInterface;
 
 public class SongList {
 
@@ -12,7 +12,7 @@ public class SongList {
     Song song4 = new Song("Hello", 180);
     Song song5 = new Song("World", 90);
 
-    public static ListInterface<Song> songList = new SortedArrayList<Song>();
+    public static SortedListInterface<Song> songList = new SortedArrayList<Song>();
 
     public SongList() {
         songList.setComparator(null);
