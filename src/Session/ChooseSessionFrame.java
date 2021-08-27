@@ -20,8 +20,13 @@ public class ChooseSessionFrame extends javax.swing.JFrame {
         initComponents();
 
         String[] name = {"No.", "Session Name", "Member Number"};
-
-        sessionListUI.setModel(new DefaultTableModel(name, sessionList.getTotal()));
+        DefaultTableModel newTable = new DefaultTableModel(name, sessionList.getTotal()) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        sessionListUI.setModel(newTable);
 
         for (int i = 0; i < sessionList.getTotal(); i++) {
             sessionListUI.setValueAt(i + 1, i, 0);
@@ -31,7 +36,6 @@ public class ChooseSessionFrame extends javax.swing.JFrame {
 
     }
 
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 

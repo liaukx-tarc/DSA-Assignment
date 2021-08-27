@@ -11,8 +11,13 @@ public class ChooseSongFrame extends javax.swing.JFrame {
     public ChooseSongFrame() {
         initComponents();
         String[] name = {"Name", "Song Legth"};
-
-        songListUI.setModel(new DefaultTableModel(name, songList.songList.getTotal()));
+        DefaultTableModel newTable = new DefaultTableModel(name, songList.songList.getTotal()){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        songListUI.setModel(newTable);
         for (int i = 0; i < songList.songList.getTotal(); i++) {
             int songLenghtInSec = songList.songList.getEntry(i + 1).getSongLength();
             String songLenght = String.format("%4d:%02d", songLenghtInSec / 60, songLenghtInSec % 60);
@@ -23,7 +28,6 @@ public class ChooseSongFrame extends javax.swing.JFrame {
 
     }
 
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 

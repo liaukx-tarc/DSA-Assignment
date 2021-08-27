@@ -12,18 +12,17 @@ public class SessionFrame extends javax.swing.JFrame {
 
     public static boolean adding = false;
     DefaultListModel memberJoinList = new DefaultListModel();
-    
+
     public SessionFrame() {
         initComponents();
         String[] name = {"No.", "Singer", "Song", "Duration"};
-        
-        jInternalFrame1.setTitle(session.getSessionName());       
+
+        jInternalFrame1.setTitle(session.getSessionName());
         memberJoinedList.setModel(memberJoinList);
         songQueue = session.getSongQueue();
         songQueueList.setModel(new DefaultTableModel(name, songQueue.countEntry()));
     }
 
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -59,7 +58,15 @@ public class SessionFrame extends javax.swing.JFrame {
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         songQueueList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         songQueueList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         songQueuePanel.setViewportView(songQueueList);
@@ -153,7 +160,7 @@ public class SessionFrame extends javax.swing.JFrame {
                     .addComponent(skipNextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(skipSongButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         memberJoinedList.setModel(new javax.swing.AbstractListModel<String>() {
@@ -211,6 +218,7 @@ public class SessionFrame extends javax.swing.JFrame {
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         if (!adding) {
             java.awt.EventQueue.invokeLater(new Runnable() {
+                @Override
                 public void run() {
                     new ChooseSongFrame().setVisible(true);
                 }
@@ -233,7 +241,13 @@ public class SessionFrame extends javax.swing.JFrame {
         Iterator<SelectedSong> iterator = songQueue.getIterator();
 
         String[] name = {"No.", "Singer", "Song", "Duration"};
-        songQueueList.setModel(new DefaultTableModel(name, songQueue.countEntry()));
+        DefaultTableModel newTable = new DefaultTableModel(name, songQueue.countEntry()) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        songQueueList.setModel(newTable);
 
         while (iterator.hasNext()) {
             SelectedSong nextSong = iterator.next();
@@ -247,11 +261,11 @@ public class SessionFrame extends javax.swing.JFrame {
             i++;
         }
     }
-    
-    public void updateMemberJoinedList(){
+
+    public void updateMemberJoinedList() {
         memberJoinList.clear();
         for (int i = 0; i < session.getMemberList().getTotal(); i++) {
-            memberJoinList.addElement(session.getMemberList().getEntry(i+1).getMemberName());
+            memberJoinList.addElement(session.getMemberList().getEntry(i + 1).getMemberName());
         }
     }
 
@@ -281,11 +295,11 @@ public class SessionFrame extends javax.swing.JFrame {
             songProgressBar.setValue((int) progressPercent);
 
             //Duration Time
-            int timePass = (int)songLength - ((int)endTime - (int)currentTIme);
+            int timePass = (int) songLength - ((int) endTime - (int) currentTIme);
             String durationText = "";
-            durationText += String.format("%4d:%02d", timePass / 60, timePass % 60) + " / " + String.format("%4d:%02d", (int)songLength / 60, (int)songLength % 60);
+            durationText += String.format("%4d:%02d", timePass / 60, timePass % 60) + " / " + String.format("%4d:%02d", (int) songLength / 60, (int) songLength % 60);
             durationField.setText(durationText);
-            
+
         } else {
             songProgressBar.setValue(0);
         }
