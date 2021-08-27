@@ -24,9 +24,11 @@ public class MemberMaintenance {
     public void memberController(){
         memberList.setComparator(new MemberComparator(0));
         
+        
         //For testing
+        SongList songList = new SongList();
         Member member1 = new Member("A0002","Kai Xian", "xiankai77@gmail.com", 'M', "2021-08-20");
-        member1.setFavSongList(SongList.songList);
+        member1.setFavSongList(songList.songList);
         Member member2 = new Member("A0003","Zi Xiu", "zx123@gmail.com", 'M', "2021-08-21");
         Member member3 = new Member("A0001","mok", "mokgae@gmail.com", 'M', "2021-08-19");
         Member member4 = new Member("A0004","Alice", "alice@gmail.com", 'M', "2021-08-23");
@@ -187,7 +189,7 @@ public class MemberMaintenance {
             System.out.println("4. Member date joined");
             System.out.println("5. Return to previous menu");
             System.out.println("--------------------------------------------------------------------------------------------------------");
-            System.out.print("Please enter your choice(1-4): ");
+            System.out.print("Please enter your choice(1-5): ");
             inputSort = Integer.parseInt(userInput.nextLine());
             if(inputSort >= 1 && inputSort <= 4)
             {
@@ -253,7 +255,7 @@ public class MemberMaintenance {
             System.out.println("4. Delete member");
             System.out.println("5. Return to previous menu");
             System.out.println("--------------------------------------------------------------------------------------------------------");
-            System.out.print("Please enter your choice(1-4): ");
+            System.out.print("Please enter your choice(1-5): ");
             int input = Integer.parseInt(userInput.nextLine());
                 switch(input)
                 {
