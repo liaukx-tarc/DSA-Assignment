@@ -1,7 +1,6 @@
 package SongMaintenance;
 
 import MemberMaintenance.SortedArrayList;
-import java.util.Comparator;
 import MemberMaintenance.SortedListInterface;
 
 public class SongList {
