@@ -7,7 +7,7 @@ import MemberMaintenance.SortedListInterface;
 public class Session implements Comparable<Session> {
 
     private SortedListInterface<Member> memberList = new SortedArrayList<Member>();
-    private QueueInterface<SelectedSong> songQueue = new LinkQueue<SelectedSong>();
+    private QueueInterface<SelectedSong> songQueue = new Queue<SelectedSong>();
     private SelectedSong currentSong;
     private String sessionName;
 

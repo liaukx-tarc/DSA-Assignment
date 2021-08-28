@@ -2,13 +2,13 @@ package Session;
 
 import java.util.Iterator;
 
-public class LinkQueue<T> implements QueueInterface<T> {
+public class Queue<T> implements QueueInterface<T> {
 
     Node firstNode;
     Node lastNode;
     int totalEntry;
 
-    LinkQueue() {
+    Queue() {
         firstNode = null;
         lastNode = null;
         totalEntry = 0;
@@ -29,7 +29,7 @@ public class LinkQueue<T> implements QueueInterface<T> {
 
     @Override
     public boolean removeFirst() {
-        if (!checkEmpty()) {
+        if (firstNode != null) {
             if (firstNode.equals(lastNode)) {
                 firstNode = null;
                 lastNode = null;
@@ -46,19 +46,17 @@ public class LinkQueue<T> implements QueueInterface<T> {
 
     @Override
     public boolean InsertEntry(T newEntry, int position) {
-        if (position <= countEntry()) {
+        if (position <= totalEntry) {
             Node newNode = new Node(newEntry);
-            Node positionNode = getPositionNode(position);
-            Node oldNextNode;
+            Node previousNode = getPositionNode(position);
 
             if (position <= 1) {
                 newNode.nextNode = firstNode;
                 firstNode = newNode;
 
             } else {
-                oldNextNode = positionNode.nextNode;
-                positionNode.nextNode = newNode;
-                newNode.nextNode = oldNextNode;
+                newNode.nextNode = previousNode.nextNode;
+                previousNode.nextNode = newNode;
             }
             totalEntry++;
             return true;
@@ -69,27 +67,28 @@ public class LinkQueue<T> implements QueueInterface<T> {
 
     @Override
     public boolean RemoveEntry(int position) {
-        int queueNum = countEntry();
         if (position > 0) {
             Node previousNode = getPositionNode(position);
 
             if (position <= 1) {
-                if (queueNum == 1) {
+                if (totalEntry == 1) {
                     clearAll();
                 } else {
                     firstNode = firstNode.nextNode;
+                    totalEntry--;
                 }
 
             } else {
-                if (position == countEntry()) {
+                if (position == totalEntry) {
 
                     previousNode.nextNode = null;
                     lastNode = previousNode;
                 } else {
                     previousNode.nextNode = previousNode.nextNode.nextNode;
                 }
+                totalEntry--;
             }
-            totalEntry--;
+            
             return true;
         }
 
@@ -101,7 +100,6 @@ public class LinkQueue<T> implements QueueInterface<T> {
         if (!checkEmpty()) {
             Node dataNode = firstNode;
             removeFirst();
-            totalEntry--;
             return dataNode.data;
         }
         return null;

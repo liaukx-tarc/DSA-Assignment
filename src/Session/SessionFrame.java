@@ -302,7 +302,6 @@ public class SessionFrame extends javax.swing.JFrame {
         if (!songQueue.checkEmpty()) {
             session.setCurrentSong(songQueue.peek());
             session.setSongQueue(songQueue);
-
             singerField.setText(session.getCurrentSong().getMember().getMemberName());
             songField.setText(session.getCurrentSong().getSong().getName());
             songEndTime = LocalTime.now().plusSeconds(session.getCurrentSong().getSong().getSongLength());
