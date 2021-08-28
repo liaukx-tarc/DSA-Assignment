@@ -303,7 +303,7 @@ public class SessionFrame extends javax.swing.JFrame {
     public void nextSong() {
         songQueue = session.getSongQueue();
         if (!songQueue.checkEmpty()) {
-            session.setCurrentSong(songQueue.peek());
+            session.setCurrentSong(songQueue.nextEntry());
             session.setSongQueue(songQueue);
             singerField.setText(session.getCurrentSong().getMember().getMemberName());
             songField.setText(session.getCurrentSong().getSong().getName());
