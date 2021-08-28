@@ -11,9 +11,10 @@ public class SongList {
     Song song4 = new Song("Hello", 180);
     Song song5 = new Song("World", 90);
 
-    public static SortedListInterface<Song> songList = new SortedArrayList<Song>();
+    public final SortedListInterface<Song> songList = new SortedArrayList<Song>();
 
     public SongList() {
+        
         songList.setComparator(null);
         songList.add(song1);
         songList.add(song2);
@@ -21,4 +22,9 @@ public class SongList {
         songList.add(song4);
         songList.add(song5);
     }
+    
+    public SortedListInterface<Song> getSongList()
+    {
+        return songList;
+    } 
 }
