@@ -21,15 +21,15 @@ public class MemberMaintenance {
     private int memberIDNum = 650000;
     private Member memberSearch = new Member();
     private int[] searchResult = null;
+    private SongList songList = new SongList();
     
     public void memberController(){
         memberList.setComparator(new MemberComparator(0));
         
         
         //For testing
-        SongList songList = new SongList();
         Member member1 = new Member("A0002","Kai Xian", "xiankai77@gmail.com", 'M', "2021-08-20");
-        member1.setFavSongList(songList.songList);
+        member1.setFavSongList(songList.getSongList());
         Member member2 = new Member("A0003","Zi Xiu", "zx123@gmail.com", 'M', "2021-08-21");
         Member member3 = new Member("A0001","mok", "mokgae@gmail.com", 'M', "2021-08-19");
         Member member4 = new Member("A0004","Alice", "alice@gmail.com", 'M', "2021-08-23");
@@ -340,6 +340,11 @@ public class MemberMaintenance {
         int totalMember;
         SortedListInterface<Song> favSongList;
         int input;
+        char charInput;
+        int choiceInput;
+        int songIndex;
+        boolean isExit = false;
+        boolean isExitSub = false;
         if (searchResult == null)
         {
             totalMember = memberList.getTotal();
@@ -369,25 +374,183 @@ public class MemberMaintenance {
                     userInput.nextLine();
                 }
             }while (input < 1 || input > totalMember);
-            if(searchResult == null)
-            {
-                favSongList = memberList.getEntry(input).getFavSongList();
-            }
-            else 
-            {
-                favSongList = memberList.getEntry(searchResult[input]).getFavSongList();
-            }
-            int totalSong = favSongList.getTotal();
-            System.out.println("--------------------------------------------------------------------------------------------------------\n"
-        + "Favourite Song List\n--------------------------------------------------------------------------------------------------------");
-            System.out.println("No.     Name                                                    Time Length");
-            for(int i=1;i<=totalSong;i++)
-            {
-                System.out.println((i)+".      "+favSongList.getEntry(i));
-            }
-            System.out.println("--------------------------------------------------------------------------------------------------------");
-            System.out.println(" "+totalSong+" song(s) found.");
-            System.out.println("--------------------------------------------------------------------------------------------------------");
+            do{
+                if(searchResult == null)
+                {
+                    favSongList = memberList.getEntry(input).getFavSongList();
+                }
+                else 
+                {
+                    favSongList = memberList.getEntry(searchResult[input]).getFavSongList();
+                }
+                int totalSong = favSongList.getTotal();
+                System.out.println("--------------------------------------------------------------------------------------------------------\n"
+            + "Favourite Song List\n--------------------------------------------------------------------------------------------------------");
+                System.out.println("No.     Name                                                    Time Length");
+                for(int i=1;i<=totalSong;i++)
+                {
+                    System.out.println((i)+".      "+favSongList.getEntry(i));
+                }
+                System.out.println("--------------------------------------------------------------------------------------------------------");
+                System.out.println(" "+totalSong+" song(s) found.");
+                System.out.println("--------------------------------------------------------------------------------------------------------");
+                System.out.println("1. Add Song to favourite song list");
+                System.out.println("2. Remove Song from favourite song list");
+                System.out.println("3. Clear all song");
+                System.out.println("4. Return to previous menu");
+                System.out.println("--------------------------------------------------------------------------------------------------------");
+                System.out.print("Please enter your choice(1-3): ");
+                if(userInput.hasNextInt())
+                    {
+                        choiceInput = userInput.nextInt();
+                        userInput.nextLine();
+                    }
+                    else
+                    {
+                        userInput.nextLine();
+                        choiceInput = 0;
+                    }
+                    switch(choiceInput)
+                    {
+                        case 1:
+                            if(songList.getSongList().getTotal() > 0)
+                            {
+                                System.out.println("--------------------------------------------------------------------------------------------------------\n"
+                            + "Song list\n--------------------------------------------------------------------------------------------------------");
+                                System.out.println("--------------------------------------------------------------------------------------------------------");
+                                System.out.println("No.     Name                                                    Time Length");
+                                for(int i=1;i<=songList.getSongList().getTotal();i++)
+                                {
+                                    System.out.println((i)+".      "+songList.getSongList().getEntry(i));
+                                }
+                                System.out.println("--------------------------------------------------------------------------------------------------------");
+                            do{
+                                    System.out.println("--------------------------------------------------------------------------------------------------------");
+                                    System.out.print("Please select a song (Song No.): ");
+                                    if(userInput.hasNextInt())
+                                    {
+                                        songIndex = userInput.nextInt();
+                                        userInput.nextLine();
+                                    }
+                                    else
+                                    {
+                                        userInput.nextLine();
+                                        songIndex = 0;
+                                    }
+                                    if (songIndex < 1 || songIndex > totalSong)
+                                    {
+                                        System.out.println("Invalid selection.Please Enter Again.");
+                                        userInput.nextLine();
+                                    }
+                                }while (songIndex < 1 || songIndex > totalSong);
+                                System.out.println("--------------------------------------------------------------------------------------------------------\n"
+                                        + "Add song to favourite song list\n--------------------------------------------------------------------------------------------------------");
+                                System.out.println("--------------------------------------------------------------------------------------------------------");
+                                System.out.println("No.     Name                                                    Time Length");
+                                System.out.println("1.      "+songList.getSongList().getEntry(songIndex));
+                                System.out.println("--------------------------------------------------------------------------------------------------------");
+                                do{
+                                    System.out.println("Confirm add?(Y/N)");
+                                    charInput = userInput.next().toUpperCase().charAt(0);
+                                    userInput.nextLine();
+                                    switch (charInput) {
+                                        case 'Y':
+                                            favSongList.add(songList.getSongList().getEntry(songIndex));
+                                            memberList.getEntry(input).setFavSongList(favSongList);
+                                            isExitSub = true;
+                                            break;
+                                        case 'N':
+                                            isExitSub = true;
+                                            break;
+                                        default:
+                                            System.out.println("Invalid Input.Please Enter Again.");
+                                            userInput.nextLine();
+                                            break;
+                                    }
+                                }while(!isExitSub);
+                                isExitSub = false;
+                            }
+                            else
+                            {
+                               System.out.println("No song in song database.Press any key to continue.");
+                               userInput.nextLine();
+                            }
+                            break;
+                        case 2:
+                            if(totalSong > 0)
+                            {
+                                do{
+                                    System.out.println("--------------------------------------------------------------------------------------------------------");
+                                    System.out.print("Please select a song (Song No.): ");
+                                    if(userInput.hasNextInt())
+                                    {
+                                        songIndex = userInput.nextInt();
+                                        userInput.nextLine();
+                                    }
+                                    else
+                                    {
+                                        userInput.nextLine();
+                                        songIndex = 0;
+                                    }
+                                    if (songIndex < 1 || songIndex > totalSong)
+                                    {
+                                        System.out.println("Invalid selection.Please Enter Again.");
+                                        userInput.nextLine();
+                                    }
+                                }while (songIndex < 1 || songIndex > totalSong);
+                                System.out.println("--------------------------------------------------------------------------------------------------------\n"
+                                        + "Remove song from favourite song list\n--------------------------------------------------------------------------------------------------------");
+                                System.out.println("--------------------------------------------------------------------------------------------------------");
+                                System.out.println("No.     Name                                                    Time Length");
+                                System.out.println("1.      "+favSongList.getEntry(songIndex));
+                                System.out.println("--------------------------------------------------------------------------------------------------------");
+                                do{
+                                    System.out.println("Confirm remove?(Y/N)");
+                                    charInput = userInput.next().toUpperCase().charAt(0);
+                                    userInput.nextLine();
+                                    switch (charInput) {
+                                        case 'Y':
+                                            favSongList.remove(songIndex);
+                                            memberList.getEntry(input).setFavSongList(favSongList);
+                                            isExitSub = true;    
+                                            break;
+                                        case 'N':
+                                            isExitSub = true;
+                                            break;
+                                        default:
+                                            System.out.println("Invalid Input.Please Enter Again.");
+                                            userInput.nextLine();
+                                            break;
+                                    }
+                                }while(!isExitSub);
+                                isExitSub = false;
+                            }
+                            else
+                            {
+                               System.out.println("No song found.Press any key to continue.");
+                               userInput.nextLine();
+                            }
+                            break;
+                        case 3:
+                            if(totalSong > 0)
+                            {
+                               favSongList.clear();
+                            }
+                            else
+                            {
+                               System.out.println("No song found.Press any key to continue.");
+                               userInput.nextLine();
+                            }
+                            break;
+                        case 4:
+                            isExit = true;
+                            break;
+                        default: 
+                            System.out.println("Invalid Input.Please Enter Again.");
+                            userInput.nextLine();
+                            break;
+                    }
+                }while(!isExit);
             System.out.println("Press any key to return.");
             userInput.nextLine();
         }
@@ -553,7 +716,8 @@ public class MemberMaintenance {
                 switch (charInput) {
                     case 'Y':
                         isExit = memberList.remove(memberIndex);
-                        memberDeleted++;
+                        if(isExit)
+                            memberDeleted++;
                         break;
                     case 'N':
                         isExit = true;
@@ -572,7 +736,6 @@ public class MemberMaintenance {
         }
     }
     
-
     
     public static void main(String[] args) {
         MemberMaintenance memberM = new MemberMaintenance();
@@ -580,5 +743,7 @@ public class MemberMaintenance {
         
         System.exit(0);
     }
+
+
     
 }

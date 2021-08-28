@@ -16,7 +16,7 @@ public class MergeSort<T> {
     public MergeSort(Comparator<T> comparator){
         this.comparator = comparator;
     }
-    void merge(T[] mainArray, int firstIndex, int midIndex, int lastIndex)
+    void merge(T[] tempArray, int firstIndex, int midIndex, int lastIndex)
     {
         int subArray1Size = midIndex - firstIndex + 1;
         int subArray2Size = lastIndex - midIndex;
@@ -28,12 +28,12 @@ public class MergeSort<T> {
  
         for (sub1Index = 0; sub1Index < subArray1Size; sub1Index++)
         {
-            subArray1[sub1Index] = mainArray[firstIndex + sub1Index];
+            subArray1[sub1Index] = tempArray[firstIndex + sub1Index];
         }
             
         for (sub2Index = 0; sub2Index < subArray2Size; sub2Index++)
         {
-            subArray2[sub2Index] = mainArray[midIndex + 1 + sub2Index];
+            subArray2[sub2Index] = tempArray[midIndex + 1 + sub2Index];
         }
         
         sub1Index = 0;
@@ -43,12 +43,12 @@ public class MergeSort<T> {
         {
             if (comparator.compare(subArray1[sub1Index], subArray2[sub2Index]) < 0) 
             {
-                mainArray[mainIndex] = subArray1[sub1Index];
+                tempArray[mainIndex] = subArray1[sub1Index];
                 sub1Index++;
             }
             else 
             {
-                mainArray[mainIndex] = subArray2[sub2Index];
+                tempArray[mainIndex] = subArray2[sub2Index];
                 sub2Index++;
             }
             mainIndex++;
@@ -56,14 +56,14 @@ public class MergeSort<T> {
 
         while (sub1Index < subArray1Size) 
         {
-            mainArray[mainIndex] = subArray1[sub1Index];
+            tempArray[mainIndex] = subArray1[sub1Index];
             sub1Index++;
             mainIndex++;
         }
  
         while (sub2Index < subArray2Size) 
         {
-            mainArray[mainIndex] = subArray2[sub2Index];
+            tempArray[mainIndex] = subArray2[sub2Index];
             sub2Index++;
             mainIndex++;
         }
@@ -73,15 +73,17 @@ public class MergeSort<T> {
     {
         if(comparator != null)
         {
+            T[] tempArray = mainArray;
             if (firstIndex < lastIndex) 
             {
                 int midIndex =(firstIndex + lastIndex)/2;
 
-                sort(mainArray, firstIndex, midIndex);
-                sort(mainArray, midIndex + 1, lastIndex);
+                sort(tempArray, firstIndex, midIndex);
+                sort(tempArray, midIndex + 1, lastIndex);
 
-                merge(mainArray, firstIndex, midIndex, lastIndex);
+                merge(tempArray, firstIndex, midIndex, lastIndex);
             }
+            mainArray = tempArray;
         }
     }
 }
