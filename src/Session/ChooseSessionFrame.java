@@ -11,8 +11,6 @@ import static Session.SingingSession.currentUser;
 import static Session.SingingSession.session;
 import static Session.SingingSession.sessionFrame;
 import static Session.SingingSession.sessionList;
-import static Session.SingingSession.songList;
-import SongMaintenance.SongList;
 import javax.swing.table.DefaultTableModel;
 
 public class ChooseSessionFrame extends javax.swing.JFrame {
