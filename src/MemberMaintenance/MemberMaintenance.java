@@ -553,7 +553,8 @@ public class MemberMaintenance {
                 switch (charInput) {
                     case 'Y':
                         isExit = memberList.remove(memberIndex);
-                        memberDeleted++;
+                        if(isExit)
+                            memberDeleted++;
                         break;
                     case 'N':
                         isExit = true;
