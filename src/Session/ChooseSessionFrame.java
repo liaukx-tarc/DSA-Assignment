@@ -142,6 +142,7 @@ public class ChooseSessionFrame extends javax.swing.JFrame {
             }
         });
         session = new Session("Session " + (sessionList.getTotal() + 1));
+        sessionList.add(session);
         sessionFrame = new SessionFrame();
         session.getMemberList().setComparator(new MemberComparator(2));
         session.getMemberList().add(currentUser);

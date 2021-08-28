@@ -15,14 +15,14 @@ import MemberMaintenance.SortedListInterface;
 public class SingingSession {
 
     public static SortedListInterface<Session> sessionList = new SortedArrayList<>();
-
+    public static QueueInterface<SelectedSong> songQueue;
+    
     public static Session session;
     public static ChooseSessionFrame chooseSessionFrame;
     public static SessionFrame sessionFrame;
     public static SongList songList;
-
+    
     public static LocalTime songEndTime;
-    public static QueueInterface<SelectedSong> songQueue;
     public static Member currentUser;
 
     public static void main(String[] args) {

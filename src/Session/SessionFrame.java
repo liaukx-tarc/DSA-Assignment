@@ -246,10 +246,10 @@ public class SessionFrame extends javax.swing.JFrame {
 
     private void skipNextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipNextButtonActionPerformed
         songQueue = session.getSongQueue();
-        if(songQueue.countEntry() > 0){
+        if (songQueue.countEntry() > 0) {
             songQueue.removeFirst();
         }
-        
+
         session.setSongQueue(songQueue);
         refreshList();
     }//GEN-LAST:event_skipNextButtonActionPerformed
@@ -257,6 +257,7 @@ public class SessionFrame extends javax.swing.JFrame {
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                chooseSessionFrame = new ChooseSessionFrame();
                 chooseSessionFrame.setVisible(true);
                 sessionFrame.dispose();
             }
@@ -344,6 +345,7 @@ public class SessionFrame extends javax.swing.JFrame {
     public void clearCurrentSong() {
         songField.setText(null);
         singerField.setText(null);
+        durationField.setText(null);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
