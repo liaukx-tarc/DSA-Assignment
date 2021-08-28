@@ -1,6 +1,9 @@
 package Session;
 
+import static Session.SingingSession.chooseSessionFrame;
+import static Session.SingingSession.currentUser;
 import static Session.SingingSession.session;
+import static Session.SingingSession.sessionFrame;
 import static Session.SingingSession.songEndTime;
 import static Session.SingingSession.songQueue;
 import java.time.LocalTime;
@@ -42,6 +45,7 @@ public class SessionFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         memberJoinedList = new javax.swing.JList<>();
         memberJoinedText = new javax.swing.JTextPane();
+        exitButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -160,7 +164,7 @@ public class SessionFrame extends javax.swing.JFrame {
                     .addComponent(skipNextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(skipSongButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         memberJoinedList.setModel(new javax.swing.AbstractListModel<String>() {
@@ -175,6 +179,14 @@ public class SessionFrame extends javax.swing.JFrame {
         memberJoinedText.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         memberJoinedText.setText("Member Joined");
 
+        exitButton.setBackground(new java.awt.Color(255, 102, 102));
+        exitButton.setText("Exit");
+        exitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -182,14 +194,16 @@ public class SessionFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1)
-                        .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
                         .addComponent(memberJoinedText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(53, 53, 53))))
+                        .addGap(53, 53, 53))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(exitButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,8 +214,10 @@ public class SessionFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(memberJoinedText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -234,6 +250,18 @@ public class SessionFrame extends javax.swing.JFrame {
         session.setSongQueue(songQueue);
         refreshList();
     }//GEN-LAST:event_skipNextButtonActionPerformed
+
+    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                chooseSessionFrame.setVisible(true);
+                sessionFrame.dispose();
+            }
+        });
+
+        int index[] = session.getMemberList().include(currentUser);
+        session.getMemberList().remove(index[1]);
+    }//GEN-LAST:event_exitButtonActionPerformed
 
     public void refreshList() {
         int i = 0;
@@ -283,6 +311,11 @@ public class SessionFrame extends javax.swing.JFrame {
 
     }
 
+    public void updateCurrentSong() {
+        singerField.setText(session.getCurrentSong().getMember().getMemberName());
+        songField.setText(session.getCurrentSong().getSong().getName());
+    }
+
     public void updateProgress() {
         if (session.getCurrentSong() != null) {
             //progress bar
@@ -316,6 +349,7 @@ public class SessionFrame extends javax.swing.JFrame {
     private javax.swing.JLabel curSingerLabel;
     private javax.swing.JLabel curSongLabel;
     private javax.swing.JTextPane durationField;
+    private javax.swing.JButton exitButton;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList<String> memberJoinedList;

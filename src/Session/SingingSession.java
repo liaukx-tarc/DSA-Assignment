@@ -6,6 +6,7 @@
 package Session;
 
 import MemberMaintenance.Member;
+import MemberMaintenance.MemberComparator;
 import MemberMaintenance.SortedArrayList;
 import SongMaintenance.SongList;
 import java.time.LocalTime;
@@ -33,7 +34,11 @@ public class SingingSession {
         sessionList.add(new Session("Session 2"));
         sessionList.getEntry(1).getMemberList().add(member1);
         sessionList.getEntry(1).getMemberList().add(member2);
-
+        for (int i = 0; i < sessionList.getTotal(); i++) {
+            sessionList.getEntry(i+1).getMemberList().setComparator(new MemberComparator(2));
+        }
+        
+        songList = new SongList();
         chooseSessionFrame = new ChooseSessionFrame();
 
         java.awt.EventQueue.invokeLater(new Runnable() {
