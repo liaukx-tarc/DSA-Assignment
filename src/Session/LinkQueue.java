@@ -6,10 +6,12 @@ public class LinkQueue<T> implements QueueInterface<T> {
 
     Node firstNode;
     Node lastNode;
+    int totalEntry;
 
     LinkQueue() {
         firstNode = null;
         lastNode = null;
+        totalEntry = 0;
     }
 
     @Override
@@ -22,7 +24,7 @@ public class LinkQueue<T> implements QueueInterface<T> {
         }
 
         lastNode = newNode;
-
+        totalEntry++;
     }
 
     @Override
@@ -31,9 +33,11 @@ public class LinkQueue<T> implements QueueInterface<T> {
             if (firstNode.equals(lastNode)) {
                 firstNode = null;
                 lastNode = null;
+                totalEntry--;
                 return true;
             } else {
                 firstNode = firstNode.nextNode;
+                totalEntry--;
                 return true;
             }
         }
@@ -56,7 +60,7 @@ public class LinkQueue<T> implements QueueInterface<T> {
                 positionNode.nextNode = newNode;
                 newNode.nextNode = oldNextNode;
             }
-
+            totalEntry++;
             return true;
         }
 
@@ -85,6 +89,7 @@ public class LinkQueue<T> implements QueueInterface<T> {
                     previousNode.nextNode = previousNode.nextNode.nextNode;
                 }
             }
+            totalEntry--;
             return true;
         }
 
@@ -96,6 +101,7 @@ public class LinkQueue<T> implements QueueInterface<T> {
         if (!checkEmpty()) {
             Node dataNode = firstNode;
             removeFirst();
+            totalEntry--;
             return dataNode.data;
         }
         return null;
@@ -110,19 +116,12 @@ public class LinkQueue<T> implements QueueInterface<T> {
     public void clearAll() {
         firstNode = null;
         lastNode = null;
+        totalEntry = 0;
     }
 
     @Override
     public int countEntry() {
-        int count = 0;
-        Iterator<T> iterator = getIterator();
-
-        while (iterator.hasNext()) {
-            iterator.next();
-            count++;
-        }
-
-        return count;
+        return totalEntry;
     }
 
     @Override
