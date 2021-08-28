@@ -55,11 +55,19 @@ public class SortedArrayList<T extends Comparable<T>> implements SortedListInter
         
     @Override
     public boolean remove(int position){
-        arrangeState = 1;
-        reArrange(position - 1,arrangeState);
-        totalEntries--;
-        array[totalEntries] = null;
-        return true;
+        if(position > 0)
+        {
+            arrangeState = 1;
+            reArrange(position - 1,arrangeState);
+            totalEntries--;
+            array[totalEntries] = null;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
     }
         
     @Override
