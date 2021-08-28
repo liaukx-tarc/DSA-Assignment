@@ -22,14 +22,18 @@ public class MemberMaintenance {
     private Member memberSearch = new Member();
     private int[] searchResult = null;
     private SongList songList = new SongList();
+    private SortedListInterface<Song> testFavSongList  = new SortedArrayList<Song>();
     
     public void memberController(){
         memberList.setComparator(new MemberComparator(0));
         
-        
         //For testing
         Member member1 = new Member("A0002","Kai Xian", "xiankai77@gmail.com", 'M', "2021-08-20");
-        member1.setFavSongList(songList.getSongList());
+        for(int i = 1; i <= songList.getSongList().getTotal();i++)
+        {
+            testFavSongList.add(songList.getSongList().getEntry(i));
+            member1.setFavSongList(testFavSongList);
+        }
         Member member2 = new Member("A0003","Zi Xiu", "zx123@gmail.com", 'M', "2021-08-21");
         Member member3 = new Member("A0001","mok", "mokgae@gmail.com", 'M', "2021-08-19");
         Member member4 = new Member("A0004","Alice", "alice@gmail.com", 'M', "2021-08-23");
@@ -343,6 +347,7 @@ public class MemberMaintenance {
         char charInput;
         int choiceInput;
         int songIndex;
+        int totalSong;
         boolean isExit = false;
         boolean isExitSub = false;
         if (searchResult == null)
@@ -383,7 +388,7 @@ public class MemberMaintenance {
                 {
                     favSongList = memberList.getEntry(searchResult[input]).getFavSongList();
                 }
-                int totalSong = favSongList.getTotal();
+                totalSong = favSongList.getTotal();
                 System.out.println("--------------------------------------------------------------------------------------------------------\n"
             + "Favourite Song List\n--------------------------------------------------------------------------------------------------------");
                 System.out.println("No.     Name                                                    Time Length");
@@ -413,13 +418,14 @@ public class MemberMaintenance {
                     switch(choiceInput)
                     {
                         case 1:
+                            totalSong = songList.getSongList().getTotal();
                             if(songList.getSongList().getTotal() > 0)
                             {
                                 System.out.println("--------------------------------------------------------------------------------------------------------\n"
                             + "Song list\n--------------------------------------------------------------------------------------------------------");
                                 System.out.println("--------------------------------------------------------------------------------------------------------");
                                 System.out.println("No.     Name                                                    Time Length");
-                                for(int i=1;i<=songList.getSongList().getTotal();i++)
+                                for(int i=1;i<=totalSong;i++)
                                 {
                                     System.out.println((i)+".      "+songList.getSongList().getEntry(i));
                                 }
@@ -484,6 +490,7 @@ public class MemberMaintenance {
                                     System.out.print("Please select a song (Song No.): ");
                                     if(userInput.hasNextInt())
                                     {
+                                        
                                         songIndex = userInput.nextInt();
                                         userInput.nextLine();
                                     }
