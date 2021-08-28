@@ -6,12 +6,12 @@ public class Queue<T> implements QueueInterface<T> {
 
     Node firstNode;
     Node lastNode;
-    int totalEntry;
+    int totalEntries;
 
     Queue() {
         firstNode = null;
         lastNode = null;
-        totalEntry = 0;
+        totalEntries = 0;
     }
 
     @Override
@@ -24,33 +24,29 @@ public class Queue<T> implements QueueInterface<T> {
         }
 
         lastNode = newNode;
-        totalEntry++;
+        totalEntries++;
     }
 
     @Override
-    public boolean removeFirst() {
-        if (firstNode != null) {
-            if (firstNode.equals(lastNode)) {
-                firstNode = null;
-                lastNode = null;
-                totalEntry--;
-                return true;
+    public void removeFirst() {
+        if (totalEntries > 0) {
+            if (totalEntries == 1) {
+                clearAll();
+
             } else {
                 firstNode = firstNode.nextNode;
-                totalEntry--;
-                return true;
+                totalEntries--;
             }
         }
-        return false;
     }
 
     @Override
-    public boolean InsertEntry(T newEntry, int position) {
-        if (position <= totalEntry) {
+    public void insertEntry(T newEntry, int position) {
+        if (position <= totalEntries && position > 0) {
             Node newNode = new Node(newEntry);
-            Node previousNode = getPositionNode(position);
+            Node previousNode = getPositionNode(position - 1);
 
-            if (position <= 1) {
+            if (position == 1) {
                 newNode.nextNode = firstNode;
                 firstNode = newNode;
 
@@ -58,45 +54,33 @@ public class Queue<T> implements QueueInterface<T> {
                 newNode.nextNode = previousNode.nextNode;
                 previousNode.nextNode = newNode;
             }
-            totalEntry++;
-            return true;
+            totalEntries++;
         }
-
-        return false;
     }
 
     @Override
-    public boolean RemoveEntry(int position) {
-        if (position > 0) {
-            Node previousNode = getPositionNode(position);
+    public void removeEntry(int position) {
+        if (position > 0 && totalEntries > 0) {
+            Node previousNode = getPositionNode(position - 1);
 
-            if (position <= 1) {
-                if (totalEntry == 1) {
-                    clearAll();
-                } else {
-                    firstNode = firstNode.nextNode;
-                    totalEntry--;
-                }
+            if (position == 1) {
+                removeFirst();
 
             } else {
-                if (position == totalEntry) {
+                if (position == totalEntries) {
 
                     previousNode.nextNode = null;
                     lastNode = previousNode;
                 } else {
                     previousNode.nextNode = previousNode.nextNode.nextNode;
                 }
-                totalEntry--;
+                totalEntries--;
             }
-            
-            return true;
         }
-
-        return false;
     }
 
     @Override
-    public T peek() {
+    public T nextEntry() {
         if (!checkEmpty()) {
             Node dataNode = firstNode;
             removeFirst();
@@ -114,12 +98,12 @@ public class Queue<T> implements QueueInterface<T> {
     public void clearAll() {
         firstNode = null;
         lastNode = null;
-        totalEntry = 0;
+        totalEntries = 0;
     }
 
     @Override
     public int countEntry() {
-        return totalEntry;
+        return totalEntries;
     }
 
     @Override
@@ -127,17 +111,21 @@ public class Queue<T> implements QueueInterface<T> {
         return new QueueIterator();
     }
 
-    public Node getPositionNode(int position) {
-        Node chooseNode = firstNode;
-        Iterator<T> iterator = getIterator();
-        int i = 1;
+    private Node getPositionNode(int position) {
+        if (position > 0) {
+            Node chooseNode = firstNode;
+            Iterator<T> iterator = getIterator();
+            int i = 1;
 
-        while (iterator.hasNext() && i < position - 1) {
-            chooseNode = chooseNode.nextNode;
-            i++;
+            while (iterator.hasNext() && i < position) {
+                chooseNode = chooseNode.nextNode;
+                iterator.next();
+                i++;
+            }
+
+            return chooseNode;
         }
-
-        return chooseNode;
+        return null;
     }
 
     public class QueueIterator implements Iterator<T> {

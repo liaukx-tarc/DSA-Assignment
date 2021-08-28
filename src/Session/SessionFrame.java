@@ -226,7 +226,7 @@ public class SessionFrame extends javax.swing.JFrame {
     private void skipSongButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipSongButtonActionPerformed
         int chooseIndex = songQueueList.getSelectedRow();
         songQueue = session.getSongQueue();
-        songQueue.RemoveEntry(chooseIndex + 1);
+        songQueue.removeEntry(chooseIndex + 1);
         session.setSongQueue(songQueue);
         refreshList();
     }//GEN-LAST:event_skipSongButtonActionPerformed
@@ -246,7 +246,10 @@ public class SessionFrame extends javax.swing.JFrame {
 
     private void skipNextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipNextButtonActionPerformed
         songQueue = session.getSongQueue();
-        songQueue.removeFirst();
+        if(songQueue.countEntry() > 0){
+            songQueue.removeFirst();
+        }
+        
         session.setSongQueue(songQueue);
         refreshList();
     }//GEN-LAST:event_skipNextButtonActionPerformed
@@ -300,7 +303,7 @@ public class SessionFrame extends javax.swing.JFrame {
     public void nextSong() {
         songQueue = session.getSongQueue();
         if (!songQueue.checkEmpty()) {
-            session.setCurrentSong(songQueue.peek());
+            session.setCurrentSong(songQueue.nextEntry());
             session.setSongQueue(songQueue);
             singerField.setText(session.getCurrentSong().getMember().getMemberName());
             songField.setText(session.getCurrentSong().getSong().getName());

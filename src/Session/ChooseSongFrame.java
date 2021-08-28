@@ -139,7 +139,7 @@ public class ChooseSongFrame extends javax.swing.JFrame {
                 if (placeChoose < 0) {
                     placeChoose = 1;
                 }
-                songQueue.InsertEntry(chooseSong, placeChoose);
+                songQueue.insertEntry(chooseSong, placeChoose);
                 session.setSongQueue(songQueue);
 
             } else {
