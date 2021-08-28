@@ -11,7 +11,7 @@ public class SongList {
     Song song4 = new Song("Hello", 180);
     Song song5 = new Song("World", 90);
 
-    public final SortedListInterface<Song> songList = new SortedArrayList<Song>();
+    private final SortedListInterface<Song> songList = new SortedArrayList<Song>();
 
     public SongList() {
         
