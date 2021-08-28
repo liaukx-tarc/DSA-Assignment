@@ -146,7 +146,7 @@ public class ChooseSongFrame extends javax.swing.JFrame {
                 songQueue.addQueue(chooseSong);
                 session.setSongQueue(songQueue);
             }
-
+            
             if (session.getCurrentSong() == null) {
                 SingingSession.sessionFrame.nextSong();
             }
