@@ -139,7 +139,7 @@ public class SortedArrayList<T extends Comparable<T>> implements SortedListInter
     @Override
     public void sort()
     {
-        if(totalEntries > 1)
+        if(totalEntries > 1 && comparator != null)
         {
             MergeSort mergeSort = new MergeSort(comparator);
             mergeSort.sort(array,0,totalEntries-1);
