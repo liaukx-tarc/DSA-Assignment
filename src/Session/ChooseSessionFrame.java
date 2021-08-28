@@ -5,6 +5,7 @@
  */
 package Session;
 
+import MemberMaintenance.MemberComparator;
 import static Session.SingingSession.chooseSessionFrame;
 import static Session.SingingSession.currentUser;
 import static Session.SingingSession.session;
@@ -125,7 +126,11 @@ public class ChooseSessionFrame extends javax.swing.JFrame {
             session = sessionList.getEntry(selectedSession + 1);
 
             sessionFrame = new SessionFrame();
-            songList = new SongList();
+            if (session.getCurrentSong() != null) {
+                sessionFrame.updateCurrentSong();
+            }
+
+            sessionFrame.refreshList();
             session.getMemberList().add(currentUser);
         }
 
@@ -140,7 +145,7 @@ public class ChooseSessionFrame extends javax.swing.JFrame {
         });
         session = new Session("Session " + (sessionList.getTotal() + 1));
         sessionFrame = new SessionFrame();
-        songList = new SongList();
+        session.getMemberList().setComparator(new MemberComparator(2));
         session.getMemberList().add(currentUser);
     }//GEN-LAST:event_addNewButtonActionPerformed
 
