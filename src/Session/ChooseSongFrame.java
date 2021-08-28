@@ -11,18 +11,18 @@ public class ChooseSongFrame extends javax.swing.JFrame {
     public ChooseSongFrame() {
         initComponents();
         String[] name = {"Name", "Song Legth"};
-        DefaultTableModel newTable = new DefaultTableModel(name, songList.songList.getTotal()){
+        DefaultTableModel newTable = new DefaultTableModel(name, songList.getSongList().getTotal()){
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
         songListUI.setModel(newTable);
-        for (int i = 0; i < songList.songList.getTotal(); i++) {
-            int songLenghtInSec = songList.songList.getEntry(i + 1).getSongLength();
+        for (int i = 0; i < songList.getSongList().getTotal(); i++) {
+            int songLenghtInSec = songList.getSongList().getEntry(i + 1).getSongLength();
             String songLenght = String.format("%4d:%02d", songLenghtInSec / 60, songLenghtInSec % 60);
 
-            songListUI.setValueAt(songList.songList.getEntry(i + 1).getName(), i, 0);
+            songListUI.setValueAt(songList.getSongList().getEntry(i + 1).getName(), i, 0);
             songListUI.setValueAt(songLenght, i, 1);
         }
 
@@ -133,7 +133,7 @@ public class ChooseSongFrame extends javax.swing.JFrame {
             int placeChoose = Integer.parseInt(noField.getText());
             SelectedSong chooseSong;
 
-            chooseSong = new SelectedSong(currentUser, songList.songList.getEntry(selectNum + 1));
+            chooseSong = new SelectedSong(currentUser, songList.getSongList().getEntry(selectNum + 1));
 
             if (placeChoose <= session.getSongQueue().countEntry() && placeChoose != 0) {
                 if (placeChoose < 0) {
