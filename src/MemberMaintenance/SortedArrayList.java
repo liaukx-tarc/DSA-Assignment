@@ -22,6 +22,7 @@ public class SortedArrayList<T extends Comparable<T>> implements SortedListInter
     public SortedArrayList(){
         arraySize = 5;
         totalEntries = 0;
+        arrangeState = 0;
         array = (T[]) new Comparable[arraySize];
         comparator = null;
     }
@@ -55,7 +56,7 @@ public class SortedArrayList<T extends Comparable<T>> implements SortedListInter
         
     @Override
     public boolean remove(int position){
-        if(position > 0)
+        if(position > 0 && position <= totalEntries)
         {
             arrangeState = 1;
             reArrange(position - 1,arrangeState);
@@ -67,7 +68,6 @@ public class SortedArrayList<T extends Comparable<T>> implements SortedListInter
         {
             return false;
         }
-
     }
         
     @Override
@@ -84,7 +84,7 @@ public class SortedArrayList<T extends Comparable<T>> implements SortedListInter
     public int[] include(T entry){
         int i = 0;
         int n = 0;
-        int[] entriesFound = new int [totalEntries + 1];
+        int[] entriesFound = new int [totalEntries + 1]; // first array store total result found. Therefore totalEntries + 1
         while (i < totalEntries)
         {
             if(array[i].toString().toUpperCase().contains(entry.toString().toUpperCase()))
