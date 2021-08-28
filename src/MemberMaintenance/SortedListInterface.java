@@ -25,6 +25,4 @@ public interface SortedListInterface<T> {
     public boolean isEmpty();
     public void setComparator(Comparator comparator);
     public void sort();
-
-    
 }

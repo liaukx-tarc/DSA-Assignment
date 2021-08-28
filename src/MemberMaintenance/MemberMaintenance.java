@@ -22,12 +22,13 @@ public class MemberMaintenance {
     private Member memberSearch = new Member();
     private int[] searchResult = null;
     private SongList songList = new SongList();
-    private SortedListInterface<Song> testFavSongList  = new SortedArrayList<Song>();
+
     
     public void memberController(){
         memberList.setComparator(new MemberComparator(0));
         
         //For testing
+        SortedListInterface<Song> testFavSongList  = new SortedArrayList<>();
         Member member1 = new Member("A0002","Kai Xian", "xiankai77@gmail.com", 'M', "2021-08-20");
         for(int i = 1; i <= songList.getSongList().getTotal();i++)
         {
@@ -430,6 +431,8 @@ public class MemberMaintenance {
                                     System.out.println((i)+".      "+songList.getSongList().getEntry(i));
                                 }
                                 System.out.println("--------------------------------------------------------------------------------------------------------");
+                                System.out.println(" "+totalSong+" song(s) found.");
+                                System.out.println("--------------------------------------------------------------------------------------------------------");
                             do{
                                     System.out.println("--------------------------------------------------------------------------------------------------------");
                                     System.out.print("Please select a song (Song No.): ");
@@ -511,6 +514,7 @@ public class MemberMaintenance {
                                 System.out.println("No.     Name                                                    Time Length");
                                 System.out.println("1.      "+favSongList.getEntry(songIndex));
                                 System.out.println("--------------------------------------------------------------------------------------------------------");
+                                
                                 do{
                                     System.out.println("Confirm remove?(Y/N)");
                                     charInput = userInput.next().toUpperCase().charAt(0);
