@@ -28,12 +28,10 @@ public class MemberMaintenance {
         memberList.setComparator(new MemberComparator(0));
         
         //For testing
-        SortedListInterface<Song> testFavSongList  = new SortedArrayList<>();
         Member member1 = new Member("A0002","Kai Xian", "xiankai77@gmail.com", 'M', "2021-08-20");
         for(int i = 1; i <= songList.getSongList().getTotal();i++)
         {
-            testFavSongList.add(songList.getSongList().getEntry(i));
-            member1.setFavSongList(testFavSongList);
+            member1.getFavSongList().add(songList.getSongList().getEntry(i));
         }
         Member member2 = new Member("A0003","Zi Xiu", "zx123@gmail.com", 'M', "2021-08-21");
         Member member3 = new Member("A0001","mok", "mokgae@gmail.com", 'M', "2021-08-19");
@@ -465,7 +463,6 @@ public class MemberMaintenance {
                                     switch (charInput) {
                                         case 'Y':
                                             favSongList.add(songList.getSongList().getEntry(songIndex));
-                                            memberList.getEntry(input).setFavSongList(favSongList);
                                             isExitSub = true;
                                             break;
                                         case 'N':
@@ -514,7 +511,6 @@ public class MemberMaintenance {
                                 System.out.println("No.     Name                                                    Time Length");
                                 System.out.println("1.      "+favSongList.getEntry(songIndex));
                                 System.out.println("--------------------------------------------------------------------------------------------------------");
-                                
                                 do{
                                     System.out.println("Confirm remove?(Y/N)");
                                     charInput = userInput.next().toUpperCase().charAt(0);
@@ -522,7 +518,6 @@ public class MemberMaintenance {
                                     switch (charInput) {
                                         case 'Y':
                                             favSongList.remove(songIndex);
-                                            memberList.getEntry(input).setFavSongList(favSongList);
                                             isExitSub = true;    
                                             break;
                                         case 'N':
@@ -545,7 +540,24 @@ public class MemberMaintenance {
                         case 3:
                             if(totalSong > 0)
                             {
-                               favSongList.clear();
+                               do{
+                                    System.out.println("Confirm clear?(Y/N)");
+                                    charInput = userInput.next().toUpperCase().charAt(0);
+                                    userInput.nextLine();
+                                    switch (charInput) {
+                                        case 'Y':
+                                            favSongList.clear();
+                                            isExitSub = true;    
+                                            break;
+                                        case 'N':
+                                            isExitSub = true;
+                                            break;
+                                        default:
+                                            System.out.println("Invalid Input.Please Enter Again.");
+                                            userInput.nextLine();
+                                            break;
+                                    }
+                                }while(!isExitSub);
                             }
                             else
                             {
@@ -651,7 +663,10 @@ public class MemberMaintenance {
                     case 'Y':
                         newInfo.setMemberID(oldInfo.getMemberID());
                         newInfo.setDateJoined(oldInfo.getDateJoined());
-                        newInfo.setFavSongList(oldInfo.getFavSongList());
+                        for(int i = 1; i <= oldInfo.getFavSongList().getTotal();i++)
+                        {
+                            newInfo.getFavSongList().add(oldInfo.getFavSongList().getEntry(i));
+                        }
                         isExit = memberList.replace(memberIndex,newInfo);
                         break;
                     case 'N':
@@ -753,8 +768,5 @@ public class MemberMaintenance {
         memberM.memberController();
         
         System.exit(0);
-    }
-
-
-    
+    }  
 }

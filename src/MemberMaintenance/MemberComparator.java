@@ -53,7 +53,7 @@ public class MemberComparator implements Comparator {
 
     @Override
     public Comparator reversed() {
-        return Comparator.super.reversed(); //To change body of generated methods, choose Tools | Templates.
+        return Comparator.super.reversed(); 
     }
     
 }
