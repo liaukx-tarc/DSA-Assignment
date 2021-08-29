@@ -26,7 +26,7 @@ public class Member implements Comparable<Member>{
         memberEmail = null;
         memberGender = '\0';
         dateJoined = null;
-        favSongList = null;
+        favSongList = new SortedArrayList<>();
     }
     
     public Member(String memberID, String memberName, String memberEmail, char memberGender, String dateJoined)
