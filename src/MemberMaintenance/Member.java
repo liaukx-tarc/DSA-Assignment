@@ -5,7 +5,6 @@
  */
 package MemberMaintenance;
 import SongMaintenance.Song;
-import java.util.Comparator;
 
 /**
  *
@@ -91,7 +90,7 @@ public class Member implements Comparable<Member>{
     @Override
     public String toString(){
     
-        if(memberID == null && memberEmail == null && dateJoined == null)
+        if(memberID == null && memberName != null && memberEmail == null && dateJoined == null)
         {
             return memberName;
         }
